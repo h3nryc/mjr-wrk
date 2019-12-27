@@ -1,7 +1,6 @@
 const express = require('express');
 const app = express();
 const port = 3000;
-const scopes =
 app.use(express.static('static'));
 
 app.get('/', function(req, res){
@@ -14,11 +13,11 @@ app.get('/newpost', function(req, res){
 
 //Logs user in through spotify api
 app.get('/login', function(req, res) {
-var scopes = 'playlist-read-private user-read-email user-top-read user-library-read user-read-recently-played streaming';
+var scopes = 'playlist-read-private user-read-email user-top-read user-library-read user-read-recently-played';
 var redirect_uri = 'http://localhost:3000/me'
 res.redirect('https://accounts.spotify.com/authorize' +
   '?response_type=token' +
-  '&client_id=' + '*****' +
+  '&client_id=' + '64b934ac08fd4dfeaa7e620e42038816' +
   (scopes ? '&scope=' + encodeURIComponent(scopes) : '') +
   '&redirect_uri=' + encodeURIComponent(redirect_uri));
 });
@@ -33,8 +32,8 @@ app.get('/post/:uid', function(req, res){
 });
 
 app.get('/user/:uid', function(req, res){
-	//res.sendFile(__dirname + '/static/index.html');
-  res.end('Displaying user ' + req.params.uid);
+	res.sendFile(__dirname + '/static/views/user.html');
+  //res.end('Displaying user ' + req.params.uid);
 });
 
 

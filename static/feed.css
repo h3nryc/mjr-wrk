@@ -1,0 +1,170 @@
+.feed{
+  width: 60%;
+  height: 500px;
+  margin-left: 70px;
+  margin-right: 0;
+  display: inline-block;
+}
+.feed-head{
+  margin-bottom: 10px;
+  margin-top: 0px;
+}
+.feed ol{
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.feed li{
+  width: 600px;
+  height: 220px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  margin-top: 20px;
+  border-radius: 5px;
+  background-color: #242527;
+}
+
+.avatar{
+  height: 50px;
+  width: 50px;
+  border-radius: 100%;
+  float: left;
+
+}
+.post-head{
+  margin-left: 10px;
+}
+.post-head p{
+  margin: 0;
+  margin-left: 62px;
+}
+
+.time{
+  color: #B1B1B1;
+  margin-top: 5px!important;
+}
+
+.desc{
+  margin-top: 25px;
+  margin-left: 10px;
+}
+
+.embed{
+  margin-top: 20px;
+}
+
+.votes{
+  margin-top: 10px;
+  margin-left: 10px;
+}
+
+.voteup{
+  display: inline-block;
+  height: 25px;
+  width: 25px;
+  margin-right: 10px;
+  border-radius: 100%;
+  border: 2px solid #e74c3c;
+}
+
+.voteup:hover{
+  background-color: #e74c3c;
+}
+
+.ppic{
+  display: inline-block;
+  height: 28px;
+  width: 28px;
+  border-radius: 100%;
+}
+
+
+.right{
+  float: right;
+}
+
+.mood-bar{
+  height: 590px;
+  width: 250px;
+  padding-top: 10px;
+  margin-top: 5px;
+  margin-right: 70px;
+  background-color: #242527;
+  border-radius: 5px;
+  border: 2px solid #343536;
+
+}
+
+.mood-bar h2{
+  margin: 0;
+  font-size: 20pt;
+  padding-bottom: 20px;
+  padding-left: 20px;
+  border-bottom: 2px solid #343536;
+}
+
+.mood-bar ol{
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.mood-bar li{
+  cursor: pointer;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  padding-top: 10px;
+  border-bottom: 2px solid #343536;
+}
+
+.mood-bar p{
+  margin: 0;
+  display: inline;
+  position: relative;
+  bottom: 5px;
+}
+
+.mood-bubble{
+  margin-left: 20px;
+  display: inline-block;
+  height: 25px;
+  width: 25px;
+  border-radius: 100%;
+}
+
+.sad{
+  background-color: #8e44ad;
+}
+
+.happy{
+  background-color: #27ae60;
+}
+
+.energetic{
+  background-color: #d35400;
+}
+
+.chill{
+  background-color: #f1c40f;
+}
+
+.throwback{
+  background-color: #e74c3c;
+}
+
+.driving{
+  background-color: #b71540;
+}
+.montage{
+  background-color: #3B3B98
+}
+
+.acoustic{
+  background-color: #FD7272;
+}
+
+.rage{
+  background-color: #B33771;
+  border-bottom: 0;
+}
