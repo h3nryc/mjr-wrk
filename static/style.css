@@ -72,3 +72,59 @@ input, select, textarea{
 .results{
   width: 100%;
 }
+
+.offscreen{
+  position: relative;
+  right: 1000px;
+}
+
+.offscreen h1{
+  margin-bottom: 10px;
+}
+
+.onscreen{
+  position: relative;
+}
+
+.submit{
+  display: inline-block;
+  text-align: center;
+  height: 40px;
+  width: 70px;
+  border-radius: 5px;
+  background-color: green;
+  line-height: 40px;
+  margin-top: 15px;
+  cursor: pointer;
+}
+
+.cancel{
+  display: inline-block;
+  margin-top: 15px;
+  text-align: center;
+  height: 40px;
+  width: 70px;
+  border-radius: 5px;
+  background-color: red;
+  line-height: 40px;
+  margin-left: 5px;
+  cursor: pointer;
+  margin-bottom: 30px;
+}
+
+.desc-p{
+  margin-top: 0px;
+}
+
+.desc-input{
+  background-color: #242527;
+  border: 0;
+  height: 150px;
+  width: 500px;
+  font-size: 12pt;
+  resize: none;
+}
+
+.offscreen label{
+  margin-left: 10px;
+}

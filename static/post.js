@@ -1,4 +1,14 @@
 var token = localStorage.getItem('token');
+var postObj = {
+  time: null,
+  token: token,
+  sName: null,
+  sArtist: null,
+  sImage: null,
+  desc: null,
+  mood: null
+};
+
 var reqs = [{url: 'https://api.spotify.com/v1/me/player/recently-played?type=track&limit=5',elm: '.recent-ol'},{url: 'https://api.spotify.com/v1/me/tracks?limit=5',elm: '.saved-ol'}];
 for (var y = 0; y < reqs.length; y++) {
   $.ajax({
@@ -11,9 +21,9 @@ for (var y = 0; y < reqs.length; y++) {
                 var artist = trunc(data.items[i].track.artists[0].name,22)
                 var imgSrc = data.items[i].track.album.images[1].url
                 if ($('.recent-ol').children().length < 5) {
-                  $('.recent-ol').append('<li><img src="'+imgSrc+'" alt=""><p class="img-title">'+name+'</p><p class="img-artist">'+artist+'</p></li>');
+                  $('.recent-ol').append('<li onclick="pickToPost();"><img src="'+imgSrc+'" alt=""><p class="img-title">'+name+'</p><p class="img-artist">'+artist+'</p></li>');
                 }else{
-                  $('.saved-ol').append('<li><img src="'+imgSrc+'" alt=""><p class="img-title">'+name+'</p><p class="img-artist">'+artist+'</p></li>');
+                  $('.saved-ol').append('<li onclick="pickToPost();"><img src="'+imgSrc+'" alt=""><p class="img-title">'+name+'</p><p class="img-artist">'+artist+'</p></li>');
                 }
               }
           }
@@ -38,12 +48,48 @@ $('.search-box').on('input', function() {
                 console.log(imgSrc);
                 console.log(name);
                 console.log(artist);
-                $('.search-ol').append('<li><img src="'+imgSrc+'" alt=""><p class="img-title">'+name+'</p><p class="img-artist">'+artist+'</p></li>');
+                $('.search-ol').append('<li onclick="pickToPost();"><img src="'+imgSrc+'" alt=""><p class="img-title">'+name+'</p><p class="img-artist">'+artist+'</p></li>');
               }
             }
     })
   }
 });
+
+
+
+function pickToPost() {
+    $( ".offscreen" ).animate({
+      right: "200px",
+      position: 'absolute'
+    }, 1500 );
+
+    $( ".onscreen" ).animate({
+      left: "2000px",
+      position: 'absolute'
+    }, 1500 );
+
+    $('.offscreen').show();
+    $('.onscreen').fadeOut(100)
+    $('.offscreen').css("position", "absolute");
+    $('.offscreen').css("top", "60px");
+    $('.offscreen').css("right", "700px");
+
+}
+
+function postToPick() {
+  $( ".offscreen" ).animate({
+    right: "1000px",
+    position: 'absolute'
+  }, 1500 );
+
+  $( ".onscreen" ).animate({
+    left: "0px",
+    position: 'absolute'
+  }, 1500 );
+  $('.onscreen').toggle();
+  $('.offscreen').hide(10);
+  $('textarea').val('')
+}
 
 // https://medium.com/@DylanAttal/truncate-a-string-in-javascript-41f33171d5a8
 function trunc(str, num) {

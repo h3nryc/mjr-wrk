@@ -5,10 +5,11 @@
     <title>New Post</title>
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../feed.css">
   </head>
   <body>
     <div class="nav"><a href="/">Home</a></div>
-      <div class="content">
+      <div class="content onscreen">
         <div class="header">
           <h1>New Post</h1>
         </div>
@@ -34,6 +35,55 @@
           <ol class="saved-ol">
           </ol>
         </div>
+      </div>
+
+      <div class="content offscreen">
+        <h1>Your Post</h1>
+        <p>Song:</p>
+        <ol>
+          <li onclick="pickToPost();"><img src="https://i.scdn.co/image/ab67616d00001e02db58320165892f952a6ddb3f" alt=""><p class="img-title">Cinnamon Girl</p><p class="img-artist">Lana Del Rey</p></li>
+        </ol>
+        <p class="desc-p">Description</p>
+        <textarea type="text" class="desc-input"></textarea>
+        <p>Mood</p>
+        <label class="container">Sad
+          <input type="radio" checked="checked" name="radio">
+          <span class="checkmark"></span>
+        </label>
+        <label class="container">Happy
+          <input type="radio" name="radio">
+          <span class="checkmark"></span>
+        </label>
+        <label class="container">Energetic
+          <input type="radio" name="radio">
+          <span class="checkmark"></span>
+        </label>
+        <label class="container">Chill
+          <input type="radio" name="radio">
+          <span class="checkmark"></span>
+        </label>
+        <label class="container">Throwback
+          <input type="radio" checked="checked" name="radio">
+          <span class="checkmark"></span>
+        </label>
+        <label class="container">Driving
+          <input type="radio" name="radio">
+          <span class="checkmark"></span>
+        </label>
+        <label class="container">Montage
+          <input type="radio" name="radio">
+          <span class="checkmark"></span>
+        </label>
+        <label class="container">Acoustic
+          <input type="radio" name="radio">
+          <span class="checkmark"></span>
+        </label>
+        <label class="container">Rage
+          <input type="radio" name="radio">
+          <span class="checkmark"></span>
+        </label>
+        <br>
+        <div class="submit">Submit</div><div onclick="postToPick();" class="cancel">Cancel</div>
       </div>
 
       <script src="../jquery-3.4.1.min.js" charset="utf-8"></script>

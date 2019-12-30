@@ -17,6 +17,8 @@
   },
   "homepage": "https://github.com/h3nryc/mjr-wrk#readme",
   "dependencies": {
-    "express": "^4.17.1"
+    "curl-request": "^1.1.1",
+    "express": "^4.17.1",
+    "nedb": "^1.8.0"
   }
 }
