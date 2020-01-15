@@ -2,24 +2,15 @@ const express = require('express');
 const app = express();
 const curl = new (require( 'curl-request' ))();
 const port = 3000;
+
+var server = require('http').Server(app);
+var io = require('socket.io')(server);
+//app.listen(port, () => console.log(`Listening on ${port}!`))
+server.listen(port);
+
 app.use(express.static('static'));
 var Datastore = require('nedb')
   , posts = new Datastore({ filename: __dirname + '/db/posts.json', autoload: true });
-
-
-	// var doc = { hello: 'world'
-	//                , n: 5
-	//                , today: new Date()
-	//                , nedbIsAwesome: true
-	//                , notthere: null
-	//                , notToBeSaved: undefined  // Will not be saved
-	//                , fruits: [ 'apple', 'orange', 'pear' ]
-	//                , infos: { name: 'nedb' }
-	//                };
-	//
-	// posts.insert(doc, function (err, newDoc) {
-	// 	console.log(newDoc);
-	// });
 
 
 app.get('/', function(req, res){
@@ -56,16 +47,50 @@ app.get('/user/:uid', function(req, res){
 });
 
 
-app.listen(port, () => console.log(`Listening on ${port}!`))
+
+io.on('connection', function (socket) {
+
+  socket.on('post', function (data) {
+		getUserID(data.token,function(id) {
+			data.user = id;
+			posts.insert(data, function (err, newDoc) {
+				console.log(newDoc);
+			});
+		})
+  });
+
+  socket.on('userPosts', function (token,isToken) {
+    if (isToken) {
+      getUserID(token,function(id) {
+        usr = id;
+        posts.find({ user: usr }, function (err, docs) {
+          console.log(docs);
+        });
+      })
+    }else {
+      usr = token;
+      posts.find({ user: usr }, function (err, docs) {
+        console.log(docs);
+      });
+    }
+  });
+
+});
 
 
-function getUserID(token) {
+
+
+function getUserID(token,callback) {
 	curl.setHeaders([
-			'Authorization: Bearer BQDEoiMZc8PD_27Iza0o-vd0Q3cdYVJljGDyerC0HexUIRLzrl2rAbN2n0w-5RQUYtAh-rCT79vjB2Oo6LNNJRVRhOWEs7TQE4ZWESTeNyrbZMiojxQxIOc2gMWf3Q9SvTdC2QB9OhJATFFp6zWnwd13_OFRQ31-z0x-k9hbaix3T0BZJgRTgs0'
+			'Authorization: Bearer '+token
 	])
 	.get('https://api.spotify.com/v1/me')
 	.then(({statusCode, body, headers}) => {
 		var data = JSON.parse(body)
-			console.log(data.id);
-	})
+		callback(data.id);
+		//return data.id;
+		//console.log(data.id);
+	}).catch((e) => {
+    console.log(e);
+});
 }

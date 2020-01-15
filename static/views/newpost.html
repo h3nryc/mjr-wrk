@@ -3,6 +3,7 @@
   <head>
     <meta charset="utf-8">
     <title>New Post</title>
+    <script src="/socket.io/socket.io.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../style.css">
     <link rel="stylesheet" href="../feed.css">
@@ -40,53 +41,55 @@
       <div class="content offscreen">
         <h1>Your Post</h1>
         <p>Song:</p>
-        <ol>
-          <li onclick="pickToPost();"><img src="https://i.scdn.co/image/ab67616d00001e02db58320165892f952a6ddb3f" alt=""><p class="img-title">Cinnamon Girl</p><p class="img-artist">Lana Del Rey</p></li>
-        </ol>
+        <ol class="picked-song">
+      </ol>
         <p class="desc-p">Description</p>
         <textarea type="text" class="desc-input"></textarea>
         <p>Mood</p>
+        <form id="mood">
         <label class="container">Sad
-          <input type="radio" checked="checked" name="radio">
+          <input type="radio" value="sad" checked="checked" name="radio">
           <span class="checkmark"></span>
         </label>
         <label class="container">Happy
-          <input type="radio" name="radio">
+          <input type="radio" value="happy" name="radio">
           <span class="checkmark"></span>
         </label>
         <label class="container">Energetic
-          <input type="radio" name="radio">
+          <input type="radio" value="energetic" name="radio">
           <span class="checkmark"></span>
         </label>
         <label class="container">Chill
-          <input type="radio" name="radio">
+          <input type="radio" value="chill" name="radio">
           <span class="checkmark"></span>
         </label>
         <label class="container">Throwback
-          <input type="radio" checked="checked" name="radio">
+          <input type="radio" value="throwback" checked="checked" name="radio">
           <span class="checkmark"></span>
         </label>
         <label class="container">Driving
-          <input type="radio" name="radio">
+          <input type="radio" value="driving" name="radio">
           <span class="checkmark"></span>
         </label>
         <label class="container">Montage
-          <input type="radio" name="radio">
+          <input type="radio" value="montage" name="radio">
           <span class="checkmark"></span>
         </label>
         <label class="container">Acoustic
-          <input type="radio" name="radio">
+          <input type="radio" value="acoustic" name="radio">
           <span class="checkmark"></span>
         </label>
         <label class="container">Rage
-          <input type="radio" name="radio">
+          <input type="radio" value="rage" name="radio">
           <span class="checkmark"></span>
         </label>
+      </form>
         <br>
-        <div class="submit">Submit</div><div onclick="postToPick();" class="cancel">Cancel</div>
+        <div onclick="post.submitPost();" class="submit">Submit</div><div onclick="postToPick();" class="cancel">Cancel</div>
       </div>
 
       <script src="../jquery-3.4.1.min.js" charset="utf-8"></script>
+      <script src="../modules/postHandler.js" charset="utf-8"></script>
       <script src="../post.js" charset="utf-8"></script>
   </body>
 </html>
