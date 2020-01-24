@@ -1,22 +1,25 @@
+var socket = io.connect('http://localhost:3000');
 function PostHandler() {
-  var socket = io.connect('http://localhost:3000');
 
   this.token = localStorage.getItem('token');
   this.cPost = {
     user: null,
     time: null,
+    songId: null,
     token: this.token,
     sName: null,
     sArtist: null,
     sImage: null,
     desc: null,
+    dp: null,
     mood: null
   };
 
-  this.displayPic = function (name,artist,img) {
+  this.displayPic = function (name,artist,img,id) {
     this.cPost.sName = name;
     this.cPost.sArtist = artist;
     this.cPost.sImage = img;
+    this.cPost.id = id;
     console.log(this.cPost);
 
     $('.picked-song').append('<li><img src="'+img+'" alt=""><p class="img-title">'+name+'</p><p class="img-artist">'+artist+'</p></li>')

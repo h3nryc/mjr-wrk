@@ -1,7 +1,11 @@
+<script src="/socket.io/socket.io.js"></script>
 <script type="text/javascript">
 
+  var socket = io.connect('http://localhost:3000');
   var url = window.location.href;
   var token = url.match(/\#(?:access_token)\=([\S\s]*?)\&/)[1]; // https://stackoverflow.com/questions/29934606/how-to-get-access-token-from-the-url/29934700
   localStorage.setItem('token', token);
+
+  socket.emit('cUser', token);
   window.location = "http://localhost:3000/";
 </script>

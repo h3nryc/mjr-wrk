@@ -14,10 +14,11 @@ for (var y = 0; y < reqs.length; y++) {
                 var name = trunc(data.items[i].track.name,22)
                 var artist = trunc(data.items[i].track.artists[0].name,22)
                 var imgSrc = data.items[i].track.album.images[1].url
+                var id = data.items[i].track.id
                 if ($('.recent-ol').children().length < 5) {
-                  $('.recent-ol').append('<li onclick="pickToPost(); post.displayPic(\'' + name + '\',\'' + artist + '\',\'' + imgSrc + '\');"><img src="'+imgSrc+'" alt=""><p class="img-title">'+name+'</p><p class="img-artist">'+artist+'</p></li>')
+                  $('.recent-ol').append('<li onclick="pickToPost(); post.displayPic(\'' + name + '\',\'' + artist + '\',\'' + imgSrc + '\',\'' + id + '\');"><img src="'+imgSrc+'" alt=""><p class="img-title">'+name+'</p><p class="img-artist">'+artist+'</p></li>')
                 }else{
-                  $('.saved-ol').append('<li onclick="pickToPost(); post.displayPic(\'' + name + '\',\'' + artist + '\',\'' + imgSrc + '\');"><img src="'+imgSrc+'" alt=""><p class="img-title">'+name+'</p><p class="img-artist">'+artist+'</p></li>');
+                  $('.saved-ol').append('<li onclick="pickToPost(); post.displayPic(\'' + name + '\',\'' + artist + '\',\'' + imgSrc + '\',\'' + id + '\');"><img src="'+imgSrc+'" alt=""><p class="img-title">'+name+'</p><p class="img-artist">'+artist+'</p></li>');
                 }
               }
           }
@@ -39,10 +40,8 @@ $('.search-box').on('input', function() {
                 var name = trunc(data.tracks.items[i].name,22)
                 var artist = trunc(data.tracks.items[i].artists[0].name,22)
                 var imgSrc = data.tracks.items[i].album.images[1].url
-                console.log(imgSrc);
-                console.log(name);
-                console.log(artist);
-                $('.search-ol').append('<li onclick="pickToPost(); post.displayPic(\'' + name + '\',\'' + artist + '\',\'' + imgSrc + '\');"><img src="'+imgSrc+'" alt=""><p class="img-title">'+name+'</p><p class="img-artist">'+artist+'</p></li>');
+                var id = data.tracks.items[i].id
+                $('.search-ol').append('<li onclick="pickToPost(); post.displayPic(\'' + name + '\',\'' + artist + '\',\'' + imgSrc + '\',\'' + id + '\');"><img src="'+imgSrc+'" alt=""><p class="img-title">'+name+'</p><p class="img-artist">'+artist+'</p></li>');
               }
             }
     })

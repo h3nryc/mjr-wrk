@@ -2,7 +2,8 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title>Feed</title>
+    <title>User</title>
+    <script src="/socket.io/socket.io.js"></script>
         <link href="https://fonts.googleapis.com/css?family=Lato:400,700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
@@ -16,29 +17,11 @@
 
         <div class="feed">
           <div class="profile-box">
-            <h1>Henry Confos</h1>
-            <img src="https://scontent.fsyd7-1.fna.fbcdn.net/v/t1.0-9/34473977_2066383653683758_3906787919859286016_n.jpg?_nc_cat=111&_nc_ohc=oY8b2DsQcCAAQnl26XwW0H7ztoHqS50UIIDV9XMy6xZMHbV3LRswfMVTg&_nc_ht=scontent.fsyd7-1.fna&oh=02b3bf8c27f02c8f30e4df0875d9e2f2&oe=5EB04622" alt="" class="profilepic">
-            <p>93 Followers | 2 Posts</p>
+            <h1 id="usr-name" ></h1>
+            <p id="usr-stats" >93 Followers | 2 Posts</p>
             <div class="follow">Follow</div>
           </div>
-          <ol>
-            <li>
-              <div class="post-head">
-                <img src="https://scontent.fsyd7-1.fna.fbcdn.net/v/t1.0-9/34473977_2066383653683758_3906787919859286016_n.jpg?_nc_cat=111&_nc_ohc=oY8b2DsQcCAAQnl26XwW0H7ztoHqS50UIIDV9XMy6xZMHbV3LRswfMVTg&_nc_ht=scontent.fsyd7-1.fna&oh=02b3bf8c27f02c8f30e4df0875d9e2f2&oe=5EB04622" alt="" class="avatar">
-                <p class="share-msg"><span class="bold">Henry Confos </span> shared a song with you!</p>
-                <p class="time">Just Now</p>
-              </div>
-              <p class="desc">Lana crushed it with this one! The production, the lyrics. Amazing.</p>
-              <div class="embed">
-                <iframe id="spotify-embed" src="https://open.spotify.com/embed/track/7MtVPRGtZl6rPjMfLoI3Lh" width="600" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
-              </div>
-              <div class="votes">
-                  <div class="voteup"></div>
-                  <img src="https://scontent.fsyd7-1.fna.fbcdn.net/v/t1.0-9/34473977_2066383653683758_3906787919859286016_n.jpg?_nc_cat=111&_nc_ohc=oY8b2DsQcCAAQnl26XwW0H7ztoHqS50UIIDV9XMy6xZMHbV3LRswfMVTg&_nc_ht=scontent.fsyd7-1.fna&oh=02b3bf8c27f02c8f30e4df0875d9e2f2&oe=5EB04622" alt="" class="ppic">
-                  <img src="https://instagram.fsyd7-1.fna.fbcdn.net/v/t51.2885-19/s150x150/13736050_285692058465251_2101489001_a.jpg?_nc_ht=instagram.fsyd7-1.fna.fbcdn.net&_nc_ohc=dafXa8aip1wAX_Myg6G&oh=00a7cc6542f44d7d6318b2903be5937f&oe=5E9B8A53" alt="" class="ppic">
-              </div>
-          </li>
-          </ol>
+          <ol id="feed-posts"></ol>
         </div>
 
         <div class="right">
@@ -76,7 +59,8 @@
           </div>
         </div>
 
-      <script src="./jquery-3.4.1.min.js" charset="utf-8"></script>
-      <script src="./feed.js" charset="utf-8"></script>
+      <script src="../jquery-3.4.1.min.js" charset="utf-8"></script>
+      <script src="../modules/feedHandler.js" charset="utf-8"></script>
+      <script src="../user.js" charset="utf-8"></script>
   </body>
 </html>

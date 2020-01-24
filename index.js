@@ -10,7 +10,8 @@ server.listen(port);
 
 app.use(express.static('static'));
 var Datastore = require('nedb')
-  , posts = new Datastore({ filename: __dirname + '/db/posts.json', autoload: true });
+var posts = new Datastore({ filename: __dirname + '/db/posts.json', autoload: true });
+var users = new Datastore({ filename: __dirname + '/db/users.json', autoload: true });
 
 
 app.get('/', function(req, res){
@@ -51,32 +52,57 @@ app.get('/user/:uid', function(req, res){
 io.on('connection', function (socket) {
 
   socket.on('post', function (data) {
-		getUserID(data.token,function(id) {
+		getUserID(data.token,function(id,img) {
 			data.user = id;
+      data.dp = img;
 			posts.insert(data, function (err, newDoc) {
 				console.log(newDoc);
 			});
 		})
   });
 
+  socket.on('cUser', function(token) {
+    getUserID(token,function(id,img) {
+      users.findOne({ id: id }, function (err, doc) {
+        if (doc == null) {
+          var newUser = {
+            id: id,
+            dp: img,
+            followers: 0,
+            posts: 0
+          };
+          users.insert(newUser, function (err, newDoc) {
+            console.log(newDoc);
+          });
+        }
+      });
+
+    })
+  })
+
+  socket.on('userInfo', function(id) {
+    users.find({ id: id }, function (err, docs) {
+      socket.emit('userInfoCallback', docs);
+    });
+  })
+
   socket.on('userPosts', function (token,isToken) {
     if (isToken) {
       getUserID(token,function(id) {
         usr = id;
-        posts.find({ user: usr }, function (err, docs) {
-          console.log(docs);
+        posts.find({ user: usr }).sort({ time: -1 }).exec(function (err, docs) {
+          socket.emit('displayUsrPosts', docs);
         });
       })
     }else {
       usr = token;
-      posts.find({ user: usr }, function (err, docs) {
-        console.log(docs);
+      posts.find({ user: usr }).sort({ time: -1 }).exec(function (err, docs) {
+        socket.emit('displayUsrPosts', docs);
       });
     }
   });
 
 });
-
 
 
 
@@ -87,7 +113,7 @@ function getUserID(token,callback) {
 	.get('https://api.spotify.com/v1/me')
 	.then(({statusCode, body, headers}) => {
 		var data = JSON.parse(body)
-		callback(data.id);
+		callback(data.id,data.images[0].url);
 		//return data.id;
 		//console.log(data.id);
 	}).catch((e) => {
