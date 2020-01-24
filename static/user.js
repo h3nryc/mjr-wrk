@@ -8,6 +8,7 @@ var cUser = splitUrl[4];
 feed.userPosts(cUser,false)
 socket.emit('userInfo',cUser)
 
+//displays user information
 socket.on('userInfoCallback', function (docs) {
   console.log(docs);
   $('#usr-name').after('<img src="'+docs[0].dp+'" alt="" class="profilepic">')
@@ -15,9 +16,7 @@ socket.on('userInfoCallback', function (docs) {
   $('#usr-stats').text(docs[0].followers+' Followers | '+docs[0].posts+' Posts')
 });
 
-
+//collects the users posts
 socket.on('displayUsrPosts', function (docs) {
-  var dp = docs[0].dp;
-
   feed.display(docs)
 });

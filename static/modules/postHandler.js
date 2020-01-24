@@ -2,6 +2,7 @@ var socket = io.connect('http://localhost:3000');
 function PostHandler() {
 
   this.token = localStorage.getItem('token');
+  //outline of post data structure
   this.cPost = {
     user: null,
     time: null,
@@ -15,6 +16,7 @@ function PostHandler() {
     mood: null
   };
 
+  //set the picked song in the DOM to the be one chosen by the user
   this.displayPic = function (name,artist,img,id) {
     this.cPost.sName = name;
     this.cPost.sArtist = artist;
@@ -25,8 +27,8 @@ function PostHandler() {
     $('.picked-song').append('<li><img src="'+img+'" alt=""><p class="img-title">'+name+'</p><p class="img-artist">'+artist+'</p></li>')
   }
 
+  //submit post to the backend
   this.submitPost = function () {
-    console.log(1);
     var ts = Math.round((new Date()).getTime() / 1000);
     this.cPost.mood = $('input[name=radio]:checked', '#mood').val();
     this.cPost.desc = $('.desc-input').val();

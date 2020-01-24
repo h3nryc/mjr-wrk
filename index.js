@@ -51,16 +51,23 @@ app.get('/user/:uid', function(req, res){
 
 io.on('connection', function (socket) {
 
+// lets users create posts
   socket.on('post', function (data) {
 		getUserID(data.token,function(id,img) {
 			data.user = id;
       data.dp = img;
 			posts.insert(data, function (err, newDoc) {
-				console.log(newDoc);
+				//updates users posts
+				posts.count({ user: id }, function (err, count) {
+					users.update({ id: id }, { $set: { posts: count }}, {}, function (err, numReplaced) {
+						console.log(numReplaced);
+					});
+				});
 			});
 		})
   });
 
+//creates user in db on first login
   socket.on('cUser', function(token) {
     getUserID(token,function(id,img) {
       users.findOne({ id: id }, function (err, doc) {
@@ -80,12 +87,14 @@ io.on('connection', function (socket) {
     })
   })
 
+//collets information on user
   socket.on('userInfo', function(id) {
     users.find({ id: id }, function (err, docs) {
       socket.emit('userInfoCallback', docs);
     });
   })
 
+//collects posts from db on certain user from a token or id
   socket.on('userPosts', function (token,isToken) {
     if (isToken) {
       getUserID(token,function(id) {
@@ -105,7 +114,7 @@ io.on('connection', function (socket) {
 });
 
 
-
+//a callback function that turns a token into the users id and display picture
 function getUserID(token,callback) {
 	curl.setHeaders([
 			'Authorization: Bearer '+token
