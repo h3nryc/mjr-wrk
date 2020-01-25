@@ -12,6 +12,7 @@ app.use(express.static('static'));
 var Datastore = require('nedb')
 var posts = new Datastore({ filename: __dirname + '/db/posts.json', autoload: true });
 var users = new Datastore({ filename: __dirname + '/db/users.json', autoload: true });
+var follow = new Datastore({ filename: __dirname + '/db/follow.json', autoload: true });
 
 
 app.get('/', function(req, res){
@@ -46,7 +47,6 @@ app.get('/user/:uid', function(req, res){
 	res.sendFile(__dirname + '/static/views/user.html');
   //res.end('Displaying user ' + req.params.uid);
 });
-
 
 
 io.on('connection', function (socket) {
@@ -88,9 +88,9 @@ io.on('connection', function (socket) {
   })
 
 //collets information on user
-  socket.on('userInfo', function(id) {
+  socket.on('userInfo', function(id,reload) {
     users.find({ id: id }, function (err, docs) {
-      socket.emit('userInfoCallback', docs);
+      socket.emit('userInfoCallback', docs,reload);
     });
   })
 
@@ -110,6 +110,54 @@ io.on('connection', function (socket) {
       });
     }
   });
+
+	//checks if two users follow eachother
+	socket.on('checkFollow', function(token,usr, callback){
+		getUserID(token,function(id) {
+			follow.findOne({ id: id, follow: usr}, function (err, doc) {
+				if (doc == null) {
+				  callback(false);
+				}else{
+					callback(true)
+				}
+			});
+		})
+	});
+
+//follows are user
+	socket.on('followUsr', function(token,usr, callback){
+		getUserID(token,function(id) {
+			var data = {
+				id: id,
+				follow: usr
+			};
+			follow.insert(data, function (err, newDoc) {
+				//updates count
+				follow.count({ follow: usr }, function (err, count) {
+					users.update({ id: usr }, { $set: { followers: count }}, {}, function (err, numReplaced) {
+						console.log(numReplaced);
+						callback(true)
+					});
+				});
+			});
+		})
+	});
+
+	socket.on('unfollowUsr', function(token,usr, callback){
+		getUserID(token,function(id) {
+			follow.remove({id: id, follow: usr}, function (err, newDoc) {
+				//updates count
+				follow.count({ follow: usr }, function (err, count) {
+					users.update({ id: usr }, { $set: { followers: count }}, {}, function (err, numReplaced) {
+						console.log(numReplaced);
+						callback(true)
+					});
+				});
+			});
+		})
+	});
+
+
 
 });
 
