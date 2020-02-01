@@ -12,6 +12,7 @@ function PostHandler() {
     sArtist: null,
     sImage: null,
     desc: null,
+    likes: 0,
     dp: null,
     mood: null
   };

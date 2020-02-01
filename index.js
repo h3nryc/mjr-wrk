@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const curl = new (require( 'curl-request' ))();
+const CurlRequest = require('curl-request');
 const port = 3000;
 
 var server = require('http').Server(app);
@@ -13,6 +13,7 @@ var Datastore = require('nedb')
 var posts = new Datastore({ filename: __dirname + '/db/posts.json', autoload: true });
 var users = new Datastore({ filename: __dirname + '/db/users.json', autoload: true });
 var follow = new Datastore({ filename: __dirname + '/db/follow.json', autoload: true });
+var likes = new Datastore({ filename: __dirname + '/db/likes.json', autoload: true });
 
 
 app.get('/', function(req, res){
@@ -157,6 +158,43 @@ io.on('connection', function (socket) {
 		})
 	});
 
+	socket.on('countLikes', function(post, callback){
+		likes.count({ post: post }, function (err, count) {
+				callback(count,post)
+		});
+	});
+
+	socket.on('likePost', function(token,post, callback){
+		getUserID(token,function(id) {
+			var data = {
+				post: post,
+				user: id
+			}
+			likes.insert(data, function (err, newDoc) {
+				callback(true)
+			});
+		})
+	});
+
+	socket.on('unLikePost', function(token,post, callback){
+		getUserID(token,function(id) {
+			likes.remove({user: id, post: post}, function (err, newDoc) {
+				callback(true)
+			});
+		})
+	});
+
+	socket.on('usrLiked', function(token,post, callback){
+		getUserID(token,function(id) {
+			likes.findOne({ user: id, post: post}, function (err, doc) {
+				if (doc == null) {
+					callback(false);
+				}else{
+					callback(true)
+				}
+			});
+		})
+	});
 
 
 });
@@ -164,6 +202,7 @@ io.on('connection', function (socket) {
 
 //a callback function that turns a token into the users id and display picture
 function getUserID(token,callback) {
+	const curl = new CurlRequest;
 	curl.setHeaders([
 			'Authorization: Bearer '+token
 	])
@@ -177,3 +216,6 @@ function getUserID(token,callback) {
     console.log(e);
 });
 }
+
+
+//stats on user profile about songs

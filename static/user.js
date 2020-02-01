@@ -1,6 +1,7 @@
 var token = localStorage.getItem('token');
 var feed = new FeedHandler();
 var follow = new FollowHandler();
+var likes = new LikeHandler();
 var socket = io.connect('http://localhost:3000');
 var url = window.location.href
 var splitUrl = url.split( '/' );
@@ -15,7 +16,6 @@ socket.on('userInfoCallback', function (docs,reload) {
   follow.checkFollow(token,cUser);
   if (reload) {
       $('.dp-out').empty();
-    console.log(1);
     $('.dp-out').append('<img src="'+docs[0].dp+'" alt="" class="profilepic">')
   }
   $('#usr-name').text(docs[0].id)

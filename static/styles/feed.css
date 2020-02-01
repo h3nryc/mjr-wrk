@@ -66,6 +66,11 @@
   margin-right: 10px;
   border-radius: 100%;
   border: 2px solid #e74c3c;
+  cursor: pointer;
+}
+
+.vote-full{
+  background-color: #e74c3c;
 }
 
 .voteup:hover{
@@ -197,4 +202,10 @@
   line-height: 60px;
   float: right;
   margin-right: 30px;
+}
+
+.like-count{
+  position: relative;
+  bottom: 9px;
+  margin-left: 5px;
 }

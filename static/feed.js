@@ -1,5 +1,6 @@
 var token = localStorage.getItem('token');
 var feed = new FeedHandler();
+var likes = new LikeHandler();
 var socket = io.connect('http://localhost:3000');
 
 feed.userPosts('henry.confos',false)
