@@ -2,6 +2,7 @@ var token = localStorage.getItem('token');
 var feed = new FeedHandler();
 var follow = new FollowHandler();
 var likes = new LikeHandler();
+var post = new PostHandler();
 var socket = io.connect('http://localhost:3000');
 var url = window.location.href
 var splitUrl = url.split( '/' );
@@ -12,6 +13,7 @@ socket.emit('isMe', token,cUser , function(res){
   if (res[0]) {
     console.log(res[1]);
       $('.follow-out').hide();
+      $('.delete-box').show();
   }
 });
 

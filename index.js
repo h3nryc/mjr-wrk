@@ -224,6 +224,19 @@ io.on('connection', function (socket) {
 		})
 	});
 
+	socket.on('delPost', function(token, post) {
+		console.log(1);
+		getUserID(token,function(id) {
+			posts.remove({user: id, _id: post}, function (err, newDoc) {
+				posts.count({ user: id }, function (err, count) {
+					users.update({ id: id }, { $set: { posts: count }}, {}, function (err, numReplaced) {
+						console.log(numReplaced);
+					});
+				});
+			});
+		});
+	});
+
 
 });
 

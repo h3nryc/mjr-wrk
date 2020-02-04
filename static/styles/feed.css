@@ -141,6 +141,13 @@
   border-radius: 100%;
 }
 
+.delete-box{
+  display: none;
+  color: #b71540;
+  font-weight: bold;
+  cursor: pointer;
+};
+
 .sad{
   background-color: #8e44ad;
 }

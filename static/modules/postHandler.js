@@ -39,4 +39,13 @@ function PostHandler() {
     window.location = "http://localhost:3000/";
   }
 
+  this.delete = function (token,post) {
+    var r = confirm("Are you sure you want to delete this post?");
+    if (r == true) {
+      socket.emit('delPost', token,post);
+      location.reload();
+    }
+
+  }
+
 }
