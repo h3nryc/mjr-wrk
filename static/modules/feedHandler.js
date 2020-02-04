@@ -8,6 +8,9 @@ function FeedHandler() {
     socket.emit('userPosts', token,isToken);
   };
 
+  this.feedPosts = function(token, mood) {
+    socket.emit('feedPosts', token,mood);
+  }
   //displays posts to the DOM
   this.display = function(docs) {
     $('#feed-posts').empty();

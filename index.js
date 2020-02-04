@@ -112,6 +112,23 @@ io.on('connection', function (socket) {
     }
   });
 
+	socket.on('feedPosts', function(token, mood) {
+		getUserID(token,function(id) {
+			if (mood == false) {
+				follow.find({ id: id }, function (err, docs) {
+					var reqPosts = [];
+					for (var i = 0; i < docs.length; i++) {
+						reqPosts.push({user: docs[i].follow});
+					}
+					console.log(reqPosts);
+					 posts.find({$or: reqPosts}).sort({ time: -1 }).exec(function (err, docs) {
+		         socket.emit('displayUsrPosts', docs);
+		       });
+				});
+			};
+		});
+	})
+
 	//checks if two users follow eachother
 	socket.on('checkFollow', function(token,usr, callback){
 		getUserID(token,function(id) {
