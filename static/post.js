@@ -92,3 +92,10 @@ function trunc(str, num) {
   }
   return str.slice(0, num) + '...'
 }
+
+function navProfile() {
+  var cUser = null;
+  socket.emit('isMe', token,cUser , function(res){
+    window.location = "/user/"+res[1];
+  });
+}

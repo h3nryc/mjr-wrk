@@ -213,6 +213,17 @@ io.on('connection', function (socket) {
 		})
 	});
 
+	socket.on('isMe', function(token,cUser, callback){
+		getUserID(token,function(id) {
+			if (id == cUser) {
+				console.log('me');
+				callback([true,id])
+			}else{
+				callback([false,id])
+			}
+		})
+	});
+
 
 });
 

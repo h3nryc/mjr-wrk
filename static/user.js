@@ -7,6 +7,14 @@ var url = window.location.href
 var splitUrl = url.split( '/' );
 var cUser = splitUrl[4];
 
+
+socket.emit('isMe', token,cUser , function(res){
+  if (res[0]) {
+    console.log(res[1]);
+      $('.follow-out').hide();
+  }
+});
+
 feed.userPosts(cUser,false);
 socket.emit('userInfo',cUser,true);
 follow.checkFollow(token,cUser);
@@ -31,3 +39,10 @@ socket.on('userInfoCallback', function (docs,reload) {
 socket.on('displayUsrPosts', function (docs) {
   feed.display(docs)
 });
+
+function navProfile() {
+  var cUser = null;
+  socket.emit('isMe', token,cUser , function(res){
+    window.location = "/user/"+res[1];
+  });
+}

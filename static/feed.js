@@ -11,3 +11,10 @@ feed.feedPosts(token,false);
 socket.on('displayUsrPosts', function (docs) {
   feed.display(docs)
 });
+
+function navProfile() {
+  var cUser = null;
+  socket.emit('isMe', token,cUser , function(res){
+    window.location = "/user/"+res[1];
+  });
+}

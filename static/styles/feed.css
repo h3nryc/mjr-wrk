@@ -15,6 +15,9 @@
   margin: 0;
 }
 
+.p-link{
+  cursor: pointer;
+}
 .feed li{
   width: 600px;
   height: 220px;
