@@ -8,7 +8,6 @@ var url = window.location.href
 var splitUrl = url.split( '/' );
 var cUser = splitUrl[4];
 
-
 socket.emit('isMe', token,cUser , function(res){
   if (res[0]) {
     console.log(res[1]);
@@ -17,7 +16,12 @@ socket.emit('isMe', token,cUser , function(res){
   }
 });
 
-feed.userPosts(cUser,false);
+function usrLoad() {
+  feed.userPosts(cUser,false);
+
+}
+
+usrLoad();
 socket.emit('userInfo',cUser,true);
 follow.checkFollow(token,cUser);
 

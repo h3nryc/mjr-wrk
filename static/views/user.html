@@ -36,31 +36,37 @@
           <div class="mood-bar">
             <h2>Moods</h2>
             <ol>
+              <li onclick="usrLoad();" >
+                <div class="mood-bubble"></div> <p>No Filter</p>
+              </li>
               <li>
+                <div class="mood-bubble"></div> <p>Most Liked</p>
+              </li>
+              <li onclick="feed.displayMood('Sad')" >
                 <div class="sad mood-bubble"></div> <p>Sad</p>
               </li>
-              <li>
+              <li onclick="feed.displayMood('Happy')">
                 <div class="happy mood-bubble"></div> <p>Happy</p>
               </li>
-              <li>
+              <li onclick="feed.displayMood('Energetic')">
                 <div class="energetic mood-bubble"></div> <p>Energetic</p>
               </li>
-              <li>
+              <li onclick="feed.displayMood('Chill')">
                 <div class="chill mood-bubble"></div> <p>Chill</p>
               </li>
-              <li>
+              <li onclick="feed.displayMood('Throwback')">
                 <div class="throwback mood-bubble"></div> <p>Throwback</p>
               </li>
-              <li>
+              <li onclick="feed.displayMood('Driving')">
                 <div class="driving mood-bubble"></div> <p>Driving</p>
               </li>
-              <li>
+              <li onclick="feed.displayMood('Montage')">
                 <div class="montage mood-bubble"></div> <p>Montage</p>
               </li>
-              <li>
+              <li onclick="feed.displayMood('Acoustic')">
                 <div class="acoustic mood-bubble"></div> <p>Acoustic</p>
               </li>
-              <li>
+              <li onclick="feed.displayMood('Rage')">
                 <div class="rage mood-bubble"></div> <p>Rage</p>
               </li>
             </ol>
