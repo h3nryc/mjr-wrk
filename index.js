@@ -50,6 +50,30 @@ app.get('/user/:uid', function(req, res){
 });
 
 
+// var data = {
+// 	user: 'mac',
+// 	time: 1581297496,
+// 	songId: null,
+// 	sImage: null,
+// 	sName: 'Life Worth Living',
+// 	sArtist: 'LAUREL',
+// 	desc: 'amazing production on this one do you agree?',
+// 	likes: 0,
+// 	id: '1mCvM05OlYWQd77RDxCTLD',
+// 	mood: 'Montage',
+// 	dp: 'https://images.sk-static.com/images/media/profile_images/artists/5105188/huge_avatar'
+// };
+//
+// posts.insert(data, function (err, newDoc) {
+// 	//updates users posts
+// 	posts.count({ user: 'mac' }, function (err, count) {
+// 		users.update({ id: 'mac' }, { $set: { posts: count }}, {}, function (err, numReplaced) {
+// 			console.log(numReplaced);
+// 		});
+// 	});
+// });
+
+
 io.on('connection', function (socket) {
 
 // lets users create posts

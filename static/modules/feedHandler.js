@@ -39,6 +39,25 @@ function FeedHandler() {
     }
     this.display(found,false);
     //console.log(found);
-  }
+  };
+
+  this.displaySort = function(type){
+    var docs = JSON.parse(localStorage.getItem('docs'));
+    if (type == "likes") {
+      var swapped;
+      do {
+          swapped = false;
+          for (var i=0; i < docs.length-1; i++) {
+              if (docs[i].likes > docs[i+1].likes) {
+                  var c = docs[i].likes;
+                  docs[i].likes = docs[i+1].likes;
+                  docs[i+1].likes = c;
+                  swapped = true;
+              }
+          }
+      } while (swapped);
+      console.log(docs);
+    }
+  };
 
 }

@@ -33,7 +33,7 @@
   width: 50px;
   border-radius: 100%;
   float: left;
-
+  object-fit: cover;
 }
 .post-head{
   margin-left: 10px;
