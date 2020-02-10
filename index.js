@@ -212,7 +212,13 @@ io.on('connection', function (socket) {
 				user: id
 			}
 			likes.insert(data, function (err, newDoc) {
-				callback(true)
+				likes.count({ post: post }, function (err, count) {
+					posts.update({ _id: post }, { $set: { likes: count }}, {}, function (err, numReplaced) {
+						console.log(count);
+						console.log(numReplaced);
+						callback(true)
+					});
+				});
 			});
 		})
 	});
@@ -220,7 +226,13 @@ io.on('connection', function (socket) {
 	socket.on('unLikePost', function(token,post, callback){
 		getUserID(token,function(id) {
 			likes.remove({user: id, post: post}, function (err, newDoc) {
-				callback(true)
+				likes.count({ post: post }, function (err, count) {
+					posts.update({ _id: post }, { $set: { likes: count }}, {}, function (err, numReplaced) {
+						console.log(count);
+						console.log(numReplaced);
+						callback(true)
+					});
+				});
 			});
 		})
 	});
