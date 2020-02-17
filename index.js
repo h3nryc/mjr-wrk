@@ -39,6 +39,10 @@ app.get('/me', function(req, res){
 	res.sendFile(__dirname + '/static/views/me.html');
 });
 
+app.get('/start', function(req, res){
+	res.sendFile(__dirname + '/static/views/login.html');
+});
+
 app.get('/post/:uid', function(req, res){
 	//res.sendFile(__dirname + '/static/index.html');
   res.end('Displaying post ' + req.params.uid);
@@ -290,7 +294,9 @@ function getUserID(token,callback) {
 		//return data.id;
 		//console.log(data.id);
 	}).catch((e) => {
+		console.log(1);
     console.log(e);
+		callback(false);
 });
 }
 

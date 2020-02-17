@@ -99,3 +99,13 @@ function navProfile() {
     window.location = "/user/"+res[1];
   });
 }
+
+//refreshes token after the token expires
+window.setInterval(function(){
+  if (Math.round((new Date()).getTime() / 1000) - localStorage.getItem('time') >= 36000) {
+      window.location = "/login/";
+  }
+  if (localStorage.getItem('token') == null) {
+    window.location = "/start/";
+  }
+}, 3000);

@@ -1,0 +1,35 @@
+body{
+  background-color: #18191B;
+  color: white;
+  font-family: 'Lato', sans-serif;
+}
+
+.center{
+  text-align: center;
+  margin: auto;
+  background-color: #242527;
+  height: 300px;
+  width: 500px;
+  border-radius: 10px;
+  padding-top: 12px;
+  margin-top: 10%;
+}
+
+.log-but{
+  background-color: #64D862;
+  margin: 0 auto;
+  height: 40px;
+  line-height: 38px;
+  border-radius: 10px;
+  cursor: pointer;
+  width: 250px;
+}
+
+.center p{
+  margin-top: 35px;
+}
+
+a{
+  text-decoration: none;
+  color: white;
+}
