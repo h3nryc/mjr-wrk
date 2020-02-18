@@ -128,3 +128,9 @@ input, select, textarea{
 .offscreen label{
   margin-left: 10px;
 }
+
+.pp-center{
+  margin: auto;
+  margin-left: 25%;
+  margin-top: 20px;
+}

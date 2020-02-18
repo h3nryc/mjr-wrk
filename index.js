@@ -48,8 +48,8 @@ app.get('/start', function(req, res){
 });
 
 app.get('/post/:uid', function(req, res){
-	//res.sendFile(__dirname + '/static/index.html');
-  res.end('Displaying post ' + req.params.uid);
+	res.sendFile(__dirname + '/static/views/post.html');
+  //res.end('Displaying post ' + req.params.uid);
 });
 
 app.get('/user/:uid', function(req, res){
@@ -93,7 +93,6 @@ io.on('connection', function (socket) {
 				//updates users posts
 				posts.count({ user: id }, function (err, count) {
 					users.update({ id: id }, { $set: { posts: count }}, {}, function (err, numReplaced) {
-						console.log(numReplaced);
 					});
 				});
 			});
@@ -152,7 +151,6 @@ io.on('connection', function (socket) {
 					for (var i = 0; i < docs.length; i++) {
 						reqPosts.push({user: docs[i].follow});
 					}
-					console.log(reqPosts);
 					 posts.find({$or: reqPosts}).sort({ time: -1 }).exec(function (err, docs) {
 		         socket.emit('displayUsrPosts', docs);
 		       });
@@ -290,6 +288,15 @@ io.on('connection', function (socket) {
 
 	});
 
+	socket.on('findOnePost', function(post, callback){
+		posts.findOne({ _id: post}, function (err, doc) {
+			console.log(doc);
+			if (doc != null) {
+				callback(doc)
+			}
+		});
+
+	});
 
 
 });

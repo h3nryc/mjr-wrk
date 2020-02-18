@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>InstaMuse - Post</title>
+    <script src="/socket.io/socket.io.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles/style.css">
+    <link rel="stylesheet" href="../styles/feed.css">
+  </head>
+  <body>
+  <div class="pp-center">
+    <div class="feed">
+    <ol id="feed-posts">
+      </ol>
+      </div>
+  </div>
+
+
+  <script src="../jquery-3.4.1.min.js" charset="utf-8"></script>
+  <script src="../modules/likeHandler.js" charset="utf-8"></script>
+
+
+  <script type="text/javascript">
+    var url = window.location.href;
+    var splitUrl = url.split( '/' );
+    var post = splitUrl[4]
+    socket.emit('findOnePost', post, function(res){
+      var date = new Date(res.time * 1000);
+      $('#feed-posts').append('    <li id="'+res._id+'"><div class="post-head"><img src="'+res.dp+'" class="avatar"><p class="share-msg"><a class="usr-link" href="/user/'+res.user+'"><span class="bold">'+res.user+' </span></a> shared a song.</p><p class="time">'+date.toDateString()+' • '+res.mood+'</p></div><p class="desc">'+res.desc+'</p><div class="embed"><iframe id="spotify-embed" src="https://open.spotify.com/embed/track/'+res.id+'" width="600" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe></div></li>');
+    });
+  </script>
+  </body>
+</html>
