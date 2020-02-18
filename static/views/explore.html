@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>InstaMuse - Explore</title>
+    <script src="/socket.io/socket.io.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles/style.css">
+    <link rel="stylesheet" href="../styles/feed.css">
+    <link rel="stylesheet" href="../styles/explore.css">
+  </head>
+  <body>
+    <div class="nav">
+      <a href="http://localhost:3000"><h2 class="logo">InstaMuse</h2></a>
+      <a class="np-link" href="/newpost">New Post</a>
+      <a class="p-link" href="/explore">Explore</a>
+      <a class="p-link" onclick="navProfile();">Your Profile</a>
+    </div>
+  <div class="explore-div">
+    <div class="search">
+      <input class="search-box" type="text"placeholder="Type to search for a user...">
+      <div class="results">
+        <ol class="search-user-ol">
+        </ol>
+    </div>
+
+    <div class="rec-users">
+      <h3>10 Most Liked Songs Right Now</h3>
+            <hr>
+
+
+      <ol class="recent-ol">
+      </ol>
+    </div>
+  </div>
+
+
+
+
+
+
+
+    <script src="./jquery-3.4.1.min.js" charset="utf-8"></script>
+    <script src="./modules/exploreHandler.js" charset="utf-8"></script>
+    <script src="./modules/likeHandler.js" charset="utf-8"></script>
+    <script src="./modules/feedHandler.js" charset="utf-8"></script>
+    <script src="./explore.js" charset="utf-8"></script>
+    <script src="./feed.js" charset="utf-8"></script>
+  </body>
+</html>

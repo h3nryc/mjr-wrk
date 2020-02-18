@@ -27,7 +27,6 @@ for (var y = 0; y < reqs.length; y++) {
 //Searh functionality
 $('.search-box').on('input', function() {
   if ($('.search-box').val() == "") {
-    console.log(1);
     $('.search-ol').empty();
   }else{
     $.ajax({
@@ -102,7 +101,7 @@ function navProfile() {
 
 //refreshes token after the token expires
 window.setInterval(function(){
-  if (Math.round((new Date()).getTime() / 1000) - localStorage.getItem('time') >= 36000) {
+  if (Math.round((new Date()).getTime() / 1000) - localStorage.getItem('time') >= 3600) {
       window.location = "/login/";
   }
   if (localStorage.getItem('token') == null) {

@@ -1,0 +1,34 @@
+.explore-div{
+  width: 80%;
+  margin: auto;
+}
+
+.explore-div hr {
+    border: 1px solid #8e44ad;
+}
+.search input{
+  margin-bottom: 0;
+}
+.search-user-ol{
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  margin-bottom: 50px;
+}
+
+.search-user-ol li {
+  background-color: #242527;
+  height: 50px;
+  padding-left: 12px;
+  line-height: 50px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  cursor: pointer;
+}
+
+.search-user-ol li p{
+  margin: 0;
+  font-weight: bold;
+  margin-left: 70px;
+  font-size: 18pt;
+}

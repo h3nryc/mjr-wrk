@@ -25,7 +25,7 @@ socket.on('error', function (docs) {
 
 //refreshes token after the token expires
 window.setInterval(function(){
-  if (Math.round((new Date()).getTime() / 1000) - localStorage.getItem('time') >= 36000) {
+  if (Math.round((new Date()).getTime() / 1000) - localStorage.getItem('time') >= 3600) {
       window.location = "/login/";
   }
   if (localStorage.getItem('token') == null) {

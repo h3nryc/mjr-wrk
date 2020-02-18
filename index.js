@@ -24,6 +24,10 @@ app.get('/newpost', function(req, res){
 	res.sendFile(__dirname + '/static/views/newpost.html');
 });
 
+app.get('/explore', function(req, res){
+	res.sendFile(__dirname + '/static/views/explore.html');
+});
+
 //Logs user in through spotify api
 app.get('/login', function(req, res) {
 var scopes = 'playlist-read-private user-read-email user-top-read user-library-read user-read-recently-played user-read-private';
@@ -276,6 +280,16 @@ io.on('connection', function (socket) {
 			});
 		});
 	});
+
+	socket.on('usrSearch', function(user, callback){
+		users.findOne({ id: user}, function (err, doc) {
+			if (doc != null) {
+				callback(doc)
+			}
+		});
+
+	});
+
 
 
 });
