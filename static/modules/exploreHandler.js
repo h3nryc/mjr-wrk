@@ -4,9 +4,11 @@ function ExploreHandler() {
   this.token = localStorage.getItem('token');
 
     this.displaySearch = function(docs){
-      console.log(docs);
-      $('.search-user-ol').empty();
-      $('.search-user-ol').append('<li onclick="window.location = \'/user/'+docs.id+'\'"><img src="'+docs.dp+'" class="avatar"><p>'+docs.id+'</p></li>');
+        $('.search-user-ol').empty();
+      for (var i = 0; i < docs.length; i++) {
+        $('.search-user-ol').append('<li onclick="window.location = \'/user/'+docs[i].id+'\'"><img src="'+docs[i].dp+'" class="avatar"><p>'+docs[i].id+'</p></li>');
+
+      }
     }
 
 

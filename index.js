@@ -280,9 +280,10 @@ io.on('connection', function (socket) {
 	});
 
 	socket.on('usrSearch', function(user, callback){
-		users.findOne({ id: user}, function (err, doc) {
-			if (doc != null) {
-				callback(doc)
+		var re = new RegExp(user);
+		users.find({ id: re}, function (err, docs) {
+			if (docs != null) {
+				callback(docs)
 			}
 		});
 
