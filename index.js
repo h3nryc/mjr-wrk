@@ -296,7 +296,6 @@ io.on('connection', function (socket) {
 				callback(doc)
 			}
 		});
-
 	});
 
 

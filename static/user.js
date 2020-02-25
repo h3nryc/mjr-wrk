@@ -61,4 +61,4 @@ window.setInterval(function(){
   if (localStorage.getItem('token') == null) {
     window.location = "/start/";
   }
-}, 3000);
+}, 1500);

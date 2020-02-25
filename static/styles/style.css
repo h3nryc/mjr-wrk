@@ -134,3 +134,23 @@ input, select, textarea{
   margin-left: 25%;
   margin-top: 20px;
 }
+
+.explore-list ol{
+  list-style: none;
+  display: inline;
+  padding: 0;
+}
+.explore-list{
+  margin-top: 15px;
+  margin-left: 40px;
+}
+.explore-list li{
+  display: inline-block;
+  margin-right: 12px;
+  cursor: pointer;
+}
+
+.explore-list li img{
+  width: 200px;
+  height: 200px;
+}

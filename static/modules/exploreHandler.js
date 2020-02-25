@@ -11,5 +11,30 @@ function ExploreHandler() {
       }
     }
 
+    this.mLiked = function(docs){
+      bubbleSort(docs,"likes");
+      docs.reverse();
+      for (var i = 0; i < 10; i++) {
+        $('.recent-ol').append('<li><img src="'+docs[i].sImage+'" alt=""><p class="img-title">'+docs[i].sName+'</p><p class="img-artist">'+docs[i].sArtist+'</p></li>')
 
+      }
+    }
+
+
+}
+
+function bubbleSort(a, key)
+{
+    var swapped;
+    do {
+        swapped = false;
+        for (var i=0; i < a.length-1; i++) {
+            if (a[i][key] > a[i+1][key]) {
+                var temp = a[i];
+                a[i] = a[i+1];
+                a[i+1] = temp;
+                swapped = true;
+            }
+        }
+    } while (swapped);
 }
