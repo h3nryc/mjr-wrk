@@ -13,9 +13,10 @@ function ExploreHandler() {
 
     this.mLiked = function(docs){
       bubbleSort(docs,"likes");
+      console.log(docs);
       docs.reverse();
       for (var i = 0; i < 10; i++) {
-        $('.recent-ol').append('<li><img src="'+docs[i].sImage+'" alt=""><p class="img-title">'+docs[i].sName+'</p><p class="img-artist">'+docs[i].sArtist+'</p></li>')
+        $('.recent-ol').append('<li><img onclick="window.location = \'/post/'+docs[i]._id+'\'"src="'+docs[i].sImage+'" alt=""><p class="img-title">'+docs[i].sName+'</p><p class="img-artist">'+docs[i].sArtist+'</p></li>')
 
       }
     }

@@ -11,8 +11,10 @@ for (var y = 0; y < reqs.length; y++) {
                xhr.setRequestHeader("Authorization", "Bearer "+token)
           }, success: function(data){
               for (var i = 0; i < data.items.length; i++) {
-                var name = trunc(data.items[i].track.name,22)
-                var artist = trunc(data.items[i].track.artists[0].name,22)
+                var n = trunc(data.items[i].track.name,22)
+                var name = n.replace( /'/g, "" );
+                var a = trunc(data.items[i].track.artists[0].name,22)
+                var artist = a.replace( /'/g, "" );
                 var imgSrc = data.items[i].track.album.images[1].url
                 var id = data.items[i].track.id
                 if ($('.recent-ol').children().length < 5) {
@@ -36,8 +38,10 @@ $('.search-box').on('input', function() {
             }, success: function(data){
               $('.search-ol').empty();
               for (var i = 0; i < data.tracks.items.length; i++) {
-                var name = trunc(data.tracks.items[i].name,22)
-                var artist = trunc(data.tracks.items[i].artists[0].name,22)
+                var n = trunc(data.tracks.items[i].name,22);
+                var name = n.replace( /'/g, "" );
+                var a = trunc(data.tracks.items[i].artists[0].name,22);
+                var artist = a.replace( /'/g, "" );
                 var imgSrc = data.tracks.items[i].album.images[1].url
                 var id = data.tracks.items[i].id
                 $('.search-ol').append('<li onclick="pickToPost(); post.displayPic(\'' + name + '\',\'' + artist + '\',\'' + imgSrc + '\',\'' + id + '\');"><img src="'+imgSrc+'" alt=""><p class="img-title">'+name+'</p><p class="img-artist">'+artist+'</p></li>');
