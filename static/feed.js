@@ -12,16 +12,13 @@ socket.on('displayUsrPosts', function (docs) {
   feed.display(docs)
 });
 
+//Navigates the user to their respective profile when clicking on the 'Your Prfoile' link
 function navProfile() {
   var cUser = null;
   socket.emit('isMe', token,cUser , function(res){
     window.location = "/user/"+res[1];
   });
 }
-
-socket.on('error', function (docs) {
-  alert(1)
-});
 
 //refreshes token after the token expires
 window.setInterval(function(){

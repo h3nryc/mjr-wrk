@@ -1,13 +1,14 @@
 var explore = new ExploreHandler;
 var token = localStorage.getItem('token');
 
+//Loads the users feed posts then sorts them by most liked
 socket.emit('feedPosts', token,false);
 socket.on('displayUsrPosts', function (docs) {
   explore.mLiked(docs)
 });
 
 
-
+//Searches the database when the user updates the input field
 $('.search-box').on('input', function() {
   if ($('.search-box').val() == "") {
     $('.search-user-ol').empty();
@@ -18,6 +19,7 @@ $('.search-box').on('input', function() {
   }
 });
 
+//Navigates the user to their respective profile when clicking on the 'Your Prfoile' link
 function navProfile() {
   var cUser = null;
   socket.emit('isMe', token,cUser , function(res){

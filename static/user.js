@@ -8,14 +8,17 @@ var url = window.location.href
 var splitUrl = url.split( '/' );
 var cUser = splitUrl[4];
 
+//Checks if the user page is the page of the user that is logged in
 socket.emit('isMe', token,cUser , function(res){
   if (res[0]) {
     console.log(res[1]);
       $('.follow-out').hide();
+      $('.mood-bar').hide();
       $('.delete-box').show();
   }
 });
 
+//Loads the users posts
 function usrLoad() {
   feed.userPosts(cUser,false);
 
@@ -23,6 +26,7 @@ function usrLoad() {
 
 usrLoad();
 socket.emit('userInfo',cUser,true);
+//Checks if the logged in user follows the user page that is displayed
 follow.checkFollow(token,cUser);
 
 //displays user information
@@ -46,6 +50,7 @@ socket.on('displayUsrPosts', function (docs) {
   feed.display(docs)
 });
 
+//Navigates the user to their respective profile when clicking on the 'Your Prfoile' link
 function navProfile() {
   var cUser = null;
   socket.emit('isMe', token,cUser , function(res){

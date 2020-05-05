@@ -16,7 +16,9 @@ function FeedHandler() {
     if (set != false) {
       localStorage.setItem('docs', JSON.stringify(docs));
     }
+    if (docs.length != 0) {
     $('#feed-posts').empty();
+    }
     for (var i = 0; i < docs.length; i++) {
       likes.countLikes(docs[i]._id);
       likes.hasUsrLiked(token,docs[i]._id);

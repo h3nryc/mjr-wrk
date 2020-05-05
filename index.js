@@ -59,17 +59,17 @@ app.get('/user/:uid', function(req, res){
 
 
 // var data = {
-// 	user: 'mac',
-// 	time: 1581297496,
-// 	songId: null,
-// 	sImage: null,
-// 	sName: 'Life Worth Living',
-// 	sArtist: 'LAUREL',
-// 	desc: 'amazing production on this one do you agree?',
-// 	likes: 0,
-// 	id: '1mCvM05OlYWQd77RDxCTLD',
-// 	mood: 'Montage',
-// 	dp: 'https://images.sk-static.com/images/media/profile_images/artists/5105188/huge_avatar'
+	// user: 'mac',
+	// time: 1581297496,
+	// songId: null,
+	// sImage: null,
+	// sName: 'Life Worth Living',
+	// sArtist: 'LAUREL',
+	// desc: 'amazing production on this one do you agree?',
+	// likes: 0,
+	// id: '1mCvM05OlYWQd77RDxCTLD',
+	// mood: 'Montage',
+	// dp: 'https://images.sk-static.com/images/media/profile_images/artists/5105188/huge_avatar'
 // };
 //
 // posts.insert(data, function (err, newDoc) {
@@ -113,7 +113,24 @@ io.on('connection', function (socket) {
           users.insert(newUser, function (err, newDoc) {
             console.log(newDoc);
           });
-        }
+					var data = {
+						id: id,
+						follow: id
+					};
+					follow.insert(data, function (err, newDoc) {
+						//updates count
+						follow.count({ follow: usr }, function (err, count) {
+							users.update({ id: usr }, { $set: { followers: count }}, {}, function (err, numReplaced) {
+								console.log(numReplaced);
+							});
+						});
+					});
+        }else{
+					//update profile pictures
+					users.update({ id: id }, { $set: { dp: img }}, {}, function (err, numReplaced) {
+						console.log(err);
+					});
+				}
       });
 
     })
