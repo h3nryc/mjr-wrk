@@ -14,6 +14,7 @@ var posts = new Datastore({ filename: __dirname + '/db/posts.json', autoload: tr
 var users = new Datastore({ filename: __dirname + '/db/users.json', autoload: true });
 var follow = new Datastore({ filename: __dirname + '/db/follow.json', autoload: true });
 var likes = new Datastore({ filename: __dirname + '/db/likes.json', autoload: true });
+var notif = new Datastore({ filename: __dirname + '/db/notif.json', autoload: true });
 
 
 app.get('/', function(req, res){
@@ -45,6 +46,10 @@ app.get('/me', function(req, res){
 
 app.get('/start', function(req, res){
 	res.sendFile(__dirname + '/static/views/login.html');
+});
+
+app.get('/notif', function(req, res){
+	res.sendFile(__dirname + '/static/views/notif.html');
 });
 
 app.get('/post/:uid', function(req, res){
@@ -118,9 +123,17 @@ io.on('connection', function (socket) {
 						follow: id
 					};
 					follow.insert(data, function (err, newDoc) {
+						var notifData = {
+							receiver: id,
+							emitter: id,
+							reason: 'follow'
+						};
+						notif.insert(notifData, function (err, newDoc) {
+							console.log(newDoc);
+						});
 						//updates count
-						follow.count({ follow: usr }, function (err, count) {
-							users.update({ id: usr }, { $set: { followers: count }}, {}, function (err, numReplaced) {
+						follow.count({ follow: id }, function (err, count) {
+							users.update({ id: id }, { $set: { followers: count }}, {}, function (err, numReplaced) {
 								console.log(numReplaced);
 							});
 						});
@@ -200,6 +213,14 @@ io.on('connection', function (socket) {
 				//updates count
 				follow.count({ follow: usr }, function (err, count) {
 					users.update({ id: usr }, { $set: { followers: count }}, {}, function (err, numReplaced) {
+						var notifData = {
+							receiver: usr,
+							emitter: id,
+							reason: 'follow'
+						};
+						notif.insert(notifData, function (err, newDoc) {
+							console.log(newDoc);
+						});
 						console.log(numReplaced);
 						callback(true)
 					});
@@ -228,7 +249,7 @@ io.on('connection', function (socket) {
 		});
 	});
 
-	socket.on('likePost', function(token,post, callback){
+	socket.on('likePost', function(token,post,owner, callback){
 		getUserID(token,function(id) {
 			var data = {
 				post: post,
@@ -237,7 +258,15 @@ io.on('connection', function (socket) {
 			likes.insert(data, function (err, newDoc) {
 				likes.count({ post: post }, function (err, count) {
 					posts.update({ _id: post }, { $set: { likes: count }}, {}, function (err, numReplaced) {
-						console.log(count);
+						var notifData = {
+							post: post,
+							receiver: owner,
+							emitter: id,
+							reason: 'like'
+						};
+						notif.insert(notifData, function (err, newDoc) {
+							console.log(newDoc);
+						});
 						console.log(numReplaced);
 						callback(true)
 					});
@@ -312,6 +341,17 @@ io.on('connection', function (socket) {
 			if (doc != null) {
 				callback(doc)
 			}
+		});
+	});
+
+	socket.on('getNotif', function(token, callback){
+		getUserID(token,function(id) {
+			notif.find({ receiver: id}, function (err, docs) {
+				console.log(docs);
+				if (docs != null) {
+					callback(docs);
+				}
+			});
 		});
 	});
 

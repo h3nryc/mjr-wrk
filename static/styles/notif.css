@@ -1,0 +1,28 @@
+.notif-wrap{
+  margin: auto;
+  height: 700px;
+  overflow: scroll;
+  width: 600px;
+}
+
+.notif-wrap ul{
+  list-style: none;
+
+}
+
+.notif-wrap li{
+  width: 500px;
+  background-color: #242527;
+  height: 50px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-right: 5px;
+  padding-left: 5px;
+  border-radius: 5px;
+  margin-bottom: 15px;
+}
+
+.notif-wrap li span{
+  margin-left: 10px;
+  font-size: 12pt;
+}

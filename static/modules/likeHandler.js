@@ -15,7 +15,8 @@ function LikeHandler() {
   }
 
   this.like = function(token,post) {
-    socket.emit('likePost', token, post, function(res){
+    var owner = $( '#'+post ).find( ".bold" ).text();
+    socket.emit('likePost', token, post, owner,function(res){
       $( '#'+post ).find( "#vote-pre" ).empty();
       $( '#'+post ).find( "#vote-pre" ).append('<div  onclick="likes.unlike(\'' + token + '\',\'' + post+ '\');" class="voteup vote-full"></div>');
       var likeText = $( '#'+post ).find( ".like-count" ).text();

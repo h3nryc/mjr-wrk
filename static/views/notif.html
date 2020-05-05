@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>InstaMuse - Feed</title>
+        <script src="/socket.io/socket.io.js"></script>
+        <link href="https://fonts.googleapis.com/css?family=Lato:400,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+      <link rel="icon" href="favicon.png" type="image/png">
+    <link rel="stylesheet" href="../styles/style.css">
+    <link rel="stylesheet" href="../styles/feed.css">
+    <link rel="stylesheet" href="../styles/notif.css">
+  </head>
+  <body>
+      <div class="nav">
+        <a href="http://localhost:3000"><h2 class="logo">InstaMuse</h2></a>
+        <a class="np-link" href="/newpost">New Post</a>
+        <a class="p-link" href="/explore">Explore</a>
+        <a class="p-link" href="/notif">Notifications</a>
+        <a class="p-link" onclick="navProfile();">Your Profile</a>
+      </div>
+
+      <div class="notif-wrap">
+        <ul id="notif-ul">
+        </ul>
+      </div>
+
+      <script src="./jquery-3.4.1.min.js" charset="utf-8"></script>
+      <script src="./notif.js" charset="utf-8"></script>
+  </body>
+</html>
