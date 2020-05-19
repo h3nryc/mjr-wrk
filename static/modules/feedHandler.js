@@ -30,6 +30,7 @@ function FeedHandler() {
     };
   };
 
+  //Changes the posts in the feed based on which modd the user picks
   this.displayMood = function(mood) {
     var docs = JSON.parse(localStorage.getItem('docs'));
     var found = [];
@@ -40,9 +41,9 @@ function FeedHandler() {
       }
     }
     this.display(found,false);
-    //console.log(found);
   };
 
+  //Sorts by most liked if user choses that option
   this.displaySort = function(type){
     var docs = JSON.parse(localStorage.getItem('docs'));
     if (type == "likes") {

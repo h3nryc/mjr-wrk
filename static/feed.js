@@ -3,11 +3,10 @@ var feed = new FeedHandler();
 var likes = new LikeHandler();
 var socket = io.connect('http://localhost:3000');
 
-//feed.userPosts('henry.confos',false)
-
+//Calls for the posts on the feed
 feed.feedPosts(token,false);
 
-//displays the feeds posts
+//On callback, displays the feeds posts
 socket.on('displayUsrPosts', function (docs) {
   feed.display(docs)
 });

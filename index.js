@@ -126,7 +126,8 @@ io.on('connection', function (socket) {
 						var notifData = {
 							receiver: id,
 							emitter: id,
-							reason: 'follow'
+							reason: 'follow',
+							time: Date.now()
 						};
 						notif.insert(notifData, function (err, newDoc) {
 							console.log(newDoc);
@@ -216,7 +217,8 @@ io.on('connection', function (socket) {
 						var notifData = {
 							receiver: usr,
 							emitter: id,
-							reason: 'follow'
+							reason: 'follow',
+							time: Date.now()
 						};
 						notif.insert(notifData, function (err, newDoc) {
 							console.log(newDoc);
@@ -262,7 +264,8 @@ io.on('connection', function (socket) {
 							post: post,
 							receiver: owner,
 							emitter: id,
-							reason: 'like'
+							reason: 'like',
+							time: Date.now()
 						};
 						notif.insert(notifData, function (err, newDoc) {
 							console.log(newDoc);
@@ -346,7 +349,7 @@ io.on('connection', function (socket) {
 
 	socket.on('getNotif', function(token, callback){
 		getUserID(token,function(id) {
-			notif.find({ receiver: id}, function (err, docs) {
+			notif.find({ receiver: id }).sort({ time: -1 }).exec(function (err, docs) {
 				console.log(docs);
 				if (docs != null) {
 					callback(docs);

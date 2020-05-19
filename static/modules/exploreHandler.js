@@ -4,6 +4,7 @@ function ExploreHandler() {
   this.token = localStorage.getItem('token');
 
     this.displaySearch = function(docs){
+      //Displays the return of a user searched
         $('.search-user-ol').empty();
       for (var i = 0; i < docs.length; i++) {
         $('.search-user-ol').append('<li onclick="window.location = \'/user/'+docs[i].id+'\'"><img src="'+docs[i].dp+'" class="avatar"><p>'+docs[i].id+'</p></li>');
@@ -12,6 +13,8 @@ function ExploreHandler() {
     }
 
     this.mLiked = function(docs){
+
+      //Displays the most liked posts
       bubbleSort(docs,"likes");
       console.log(docs);
       docs.reverse();
@@ -24,6 +27,7 @@ function ExploreHandler() {
 
 }
 
+//A sort function used to sort the posts by most liked
 function bubbleSort(a, key)
 {
     var swapped;

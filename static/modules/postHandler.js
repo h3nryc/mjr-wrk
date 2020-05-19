@@ -39,6 +39,7 @@ function PostHandler() {
     window.location = "http://localhost:3000/";
   }
 
+  //Delets a post and confirms the users action
   this.delete = function (token,post) {
     var r = confirm("Are you sure you want to delete this post?");
     if (r == true) {

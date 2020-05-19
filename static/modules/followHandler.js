@@ -15,12 +15,14 @@ function FollowHandler() {
     });
   }
 
+  //Follows the user
   this.follow = function(token, usr) {
     socket.emit('followUsr', token, usr , function(res){
       socket.emit('userInfo',cUser,false);
     });
   }
 
+  //Unfollows the user
   this.unfollow = function(token,usr) {
     socket.emit('unfollowUsr', token, usr , function(res){
       socket.emit('userInfo',cUser,false);

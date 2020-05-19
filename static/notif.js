@@ -1,6 +1,7 @@
 var socket = io.connect('http://localhost:3000');
 token = localStorage.getItem('token');
 
+//Retrives the user's notifcation from the database using the spotify API Token.
 socket.emit('getNotif', token, function(res){
   console.log(res);
   for (var i = 0; i < res.length; i++) {
