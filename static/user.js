@@ -36,7 +36,8 @@ socket.on('userInfoCallback', function (docs,reload) {
       $('.dp-out').empty();
     $('.dp-out').append('<img src="'+docs[0].dp+'" alt="" class="profilepic">')
   }
-  $('#usr-name').text(docs[0].id)
+  console.log(docs[0]);
+  $('#usr-name').text(docs[0].displayName)
   if (docs[0].posts == 1) {
     $('#usr-stats').text(docs[0].followers+' Followers | '+docs[0].posts+' Post')
   }else{

@@ -7,7 +7,7 @@ function ExploreHandler() {
       //Displays the return of a user searched
         $('.search-user-ol').empty();
       for (var i = 0; i < docs.length; i++) {
-        $('.search-user-ol').append('<li onclick="window.location = \'/user/'+docs[i].id+'\'"><img src="'+docs[i].dp+'" class="avatar"><p>'+docs[i].id+'</p></li>');
+        $('.search-user-ol').append('<li onclick="window.location = \'/user/'+docs[i].id+'\'"><img src="'+docs[i].dp+'" class="avatar"><p>'+docs[i].displayName+'</p></li>');
 
       }
     }

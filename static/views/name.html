@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>One time only name change</title>
+  </head>
+  <body>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script type="text/javascript">
+    var token = localStorage.getItem('token');
+    var socket = io.connect('http://10.0.105.197:3000/');
+    var name = prompt("Please enter your display name. You have only this one chance to set it. No spaces!", "");
+    socket.emit('nameChange', name,token);
+    window.location = "http://10.0.105.197:3000/";
+  </script>
+    </body>
+</html>

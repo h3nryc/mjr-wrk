@@ -6,6 +6,7 @@ function PostHandler() {
   this.cPost = {
     user: null,
     time: null,
+    displayName: null,
     songId: null,
     token: this.token,
     sName: null,

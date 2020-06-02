@@ -8,6 +8,12 @@
   localStorage.setItem('token', token);
   localStorage.setItem('time', ts);
 
-  socket.emit('cUser', token);
-  window.location = "http://10.0.105.197:3000/";
+  socket.emit('cUser', token,function(newUsr) {
+    if (newUsr) {
+        window.location = "http://10.0.105.197:3000/name";
+    }else {
+      window.location = "http://10.0.105.197:3000/";
+    }
+  });
+
 </script>

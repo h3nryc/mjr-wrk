@@ -28,3 +28,7 @@ window.setInterval(function(){
     window.location = "/start/";
   }
 }, 1500);
+
+socket.on('NEWUSER', function() {
+  console.log(1);
+})

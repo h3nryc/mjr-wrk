@@ -44,6 +44,10 @@ app.get('/me', function(req, res){
 	res.sendFile(__dirname + '/static/views/me.html');
 });
 
+app.get('/name', function(req, res){
+	res.sendFile(__dirname + '/static/views/name.html');
+});
+
 app.get('/start', function(req, res){
 	res.sendFile(__dirname + '/static/views/login.html');
 });
@@ -67,27 +71,32 @@ io.on('connection', function (socket) {
 		getUserID(data.token,function(id,img) {
 			data.user = id;
       data.dp = img;
-			posts.insert(data, function (err, newDoc) {
-				//updates users posts
-				posts.count({ user: id }, function (err, count) {
-					users.update({ id: id }, { $set: { posts: count }}, {}, function (err, numReplaced) {
+			users.findOne({ id: id }, function (err, doc) {
+				console.log(doc.displayName);
+				data.displayName = doc.displayName;
+				posts.insert(data, function (err, newDoc) {
+					//updates users posts
+					posts.count({ user: id }, function (err, count) {
+						users.update({ id: id }, { $set: { posts: count }}, {}, function (err, numReplaced) {
+						});
 					});
 				});
-			});
+			})
 		})
   });
 
 //creates user in db on first login
-  socket.on('cUser', function(token) {
+  socket.on('cUser', function(token,callback) {
     getUserID(token,function(id,img) {
       users.findOne({ id: id }, function (err, doc) {
         if (doc == null) {
-					if (dp === null || dp === undefined || dp === '' ) {
-						dp = 'https://www.clipartkey.com/mpngs/m/29-297748_round-profile-image-placeholder.png';
+					if (img === null || img === undefined || img === '' ) {
+						img = 'https://www.clipartkey.com/mpngs/m/29-297748_round-profile-image-placeholder.png';
 					}
           var newUser = {
             id: id,
             dp: img,
+						displayName: id,
             followers: 0,
             posts: 0
           };
@@ -99,15 +108,15 @@ io.on('connection', function (socket) {
 						follow: id
 					};
 					follow.insert(data, function (err, newDoc) {
-						var notifData = {
-							receiver: id,
-							emitter: id,
-							reason: 'follow',
-							time: Date.now()
-						};
-						notif.insert(notifData, function (err, newDoc) {
-							console.log(newDoc);
-						});
+						// var notifData = {
+						// 	receiver: id,
+						// 	emitter: id,
+						// 	reason: 'follow',
+						// 	time: Date.now()
+						// };
+						// notif.insert(notifData, function (err, newDoc) {
+						// 	console.log(newDoc);
+						// });
 						//updates count
 						follow.count({ follow: id }, function (err, count) {
 							users.update({ id: id }, { $set: { followers: count }}, {}, function (err, numReplaced) {
@@ -115,11 +124,13 @@ io.on('connection', function (socket) {
 							});
 						});
 					});
+					callback(true)
         }else{
 					//update profile pictures
 					users.update({ id: id }, { $set: { dp: img }}, {}, function (err, numReplaced) {
 						console.log(err);
 					});
+					callback(false)
 				}
       });
 
@@ -189,18 +200,21 @@ io.on('connection', function (socket) {
 			follow.insert(data, function (err, newDoc) {
 				//updates count
 				follow.count({ follow: usr }, function (err, count) {
-					users.update({ id: usr }, { $set: { followers: count }}, {}, function (err, numReplaced) {
-						var notifData = {
-							receiver: usr,
-							emitter: id,
-							reason: 'follow',
-							time: Date.now()
-						};
-						notif.insert(notifData, function (err, newDoc) {
-							console.log(newDoc);
+					users.findOne({ id: id }, function (err, doc) {
+						users.update({ id: usr }, { $set: { followers: count }}, {}, function (err, numReplaced) {
+							var notifData = {
+								receiver: usr,
+								displayName: doc.displayName,
+								emitter: id,
+								reason: 'follow',
+								time: Date.now()
+							};
+							notif.insert(notifData, function (err, newDoc) {
+								console.log(newDoc);
+							});
+							console.log(numReplaced);
+							callback(true)
 						});
-						console.log(numReplaced);
-						callback(true)
 					});
 				});
 			});
@@ -236,18 +250,21 @@ io.on('connection', function (socket) {
 			likes.insert(data, function (err, newDoc) {
 				likes.count({ post: post }, function (err, count) {
 					posts.update({ _id: post }, { $set: { likes: count }}, {}, function (err, numReplaced) {
-						var notifData = {
-							post: post,
-							receiver: owner,
-							emitter: id,
-							reason: 'like',
-							time: Date.now()
-						};
-						notif.insert(notifData, function (err, newDoc) {
-							console.log(newDoc);
-						});
-						console.log(numReplaced);
-						callback(true)
+						users.findOne({ id: id }, function (err, doc) {
+							var notifData = {
+								post: post,
+								displayName: doc.displayName,
+								receiver: owner,
+								emitter: id,
+								reason: 'like',
+								time: Date.now()
+							};
+							notif.insert(notifData, function (err, newDoc) {
+								console.log(newDoc);
+							});
+							console.log(numReplaced);
+							callback(true)
+						})
 					});
 				});
 			});
@@ -291,6 +308,13 @@ io.on('connection', function (socket) {
 		})
 	});
 
+	socket.on('nameChange', function(name,token){
+		getUserID(token,function(id) {
+			users.update({ id: id }, { $set: { displayName: name }}, {}, function (err, numReplaced) {
+			});
+		})
+	});
+
 	socket.on('delPost', function(token, post) {
 		console.log(1);
 		getUserID(token,function(id) {
@@ -306,7 +330,7 @@ io.on('connection', function (socket) {
 
 	socket.on('usrSearch', function(user, callback){
 		var re = new RegExp(user);
-		users.find({ id: re}, function (err, docs) {
+		users.find({ displayName: re}, function (err, docs) {
 			if (docs != null) {
 				callback(docs)
 			}
