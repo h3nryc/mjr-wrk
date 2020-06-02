@@ -1,4 +1,4 @@
-var socket = io.connect('http://localhost:3000');
+var socket = io.connect('http://10.0.105.197:3000/');
 function StatHandler() {
 
   this.token = localStorage.getItem('token');

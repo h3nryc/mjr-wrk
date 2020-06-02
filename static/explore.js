@@ -27,6 +27,8 @@ function navProfile() {
   });
 }
 
+
+
 //refreshes token after the token expires
 window.setInterval(function(){
   if (Math.round((new Date()).getTime() / 1000) - localStorage.getItem('time') >= 3600) {

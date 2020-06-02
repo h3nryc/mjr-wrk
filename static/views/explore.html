@@ -12,7 +12,7 @@
   </head>
   <body>
     <div class="nav">
-      <a href="http://localhost:3000"><h2 class="logo">InstaMuse</h2></a>
+      <a href="http://10.0.105.197:3000/"><h2 class="logo">InstaMuse</h2></a>
       <a class="np-link" href="/newpost">New Post</a>
       <a class="p-link" href="/explore">Explore</a>
       <a class="p-link" href="/notif">Notifications</a>
@@ -30,11 +30,13 @@
       <h3>The 10 Most Liked Songs from your Feed</h3>
             <hr>
 
-<div class="explore-list">
-      <ol class="recent-ol">
-      </ol>
+      <div class="explore-list">
+        <ol class="recent-ol">
+        </ol>
       </div>
     </div>
+
+    <canvas id="myChart" width="30" height="30"></canvas>
   </div>
 
 
@@ -44,6 +46,7 @@
 
 
     <script src="./jquery-3.4.1.min.js" charset="utf-8"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js" charset="utf-8"></script>
     <script src="./modules/exploreHandler.js" charset="utf-8"></script>
     <script src="./modules/likeHandler.js" charset="utf-8"></script>
     <script src="./modules/feedHandler.js" charset="utf-8"></script>

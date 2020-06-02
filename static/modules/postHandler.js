@@ -1,4 +1,4 @@
-var socket = io.connect('http://localhost:3000');
+var socket = io.connect('http://10.0.105.197:3000/');
 function PostHandler() {
 
   this.token = localStorage.getItem('token');
@@ -36,7 +36,7 @@ function PostHandler() {
     this.cPost.time = ts;
     socket.emit('post', this.cPost);
     alert('Posted!')
-    window.location = "http://localhost:3000/";
+    window.location = "http://10.0.105.197:3000/";
   }
 
   //Delets a post and confirms the users action

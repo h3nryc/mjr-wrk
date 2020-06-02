@@ -1,7 +1,7 @@
 var token = localStorage.getItem('token');
 var feed = new FeedHandler();
 var likes = new LikeHandler();
-var socket = io.connect('http://localhost:3000');
+var socket = io.connect('http://10.0.105.197:3000/');
 
 //Calls for the posts on the feed
 feed.feedPosts(token,false);

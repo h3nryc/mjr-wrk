@@ -1,7 +1,7 @@
 <script src="/socket.io/socket.io.js"></script>
 <script type="text/javascript">
 // sets token and "logs" user in as well as creating a user in the database on first login
-  var socket = io.connect('http://localhost:3000');
+  var socket = io.connect('http://10.0.105.197:3000/');
   var url = window.location.href;
   var token = url.match(/\#(?:access_token)\=([\S\s]*?)\&/)[1]; // https://stackoverflow.com/questions/29934606/how-to-get-access-token-from-the-url/29934700
   var ts = Math.round((new Date()).getTime() / 1000);
@@ -9,5 +9,5 @@
   localStorage.setItem('time', ts);
 
   socket.emit('cUser', token);
-  window.location = "http://localhost:3000/";
+  window.location = "http://10.0.105.197:3000/";
 </script>

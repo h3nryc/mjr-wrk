@@ -32,7 +32,7 @@ app.get('/explore', function(req, res){
 //Logs user in through spotify api
 app.get('/login', function(req, res) {
 var scopes = 'playlist-read-private user-read-email user-top-read user-library-read user-read-recently-played user-read-private';
-var redirect_uri = 'http://localhost:3000/me'
+var redirect_uri = 'http://10.0.105.197:3000/me/'
 res.redirect('https://accounts.spotify.com/authorize' +
   '?response_type=token' +
   '&client_id=' + '64b934ac08fd4dfeaa7e620e42038816' +
@@ -54,38 +54,11 @@ app.get('/notif', function(req, res){
 
 app.get('/post/:uid', function(req, res){
 	res.sendFile(__dirname + '/static/views/post.html');
-  //res.end('Displaying post ' + req.params.uid);
 });
 
 app.get('/user/:uid', function(req, res){
 	res.sendFile(__dirname + '/static/views/user.html');
-  //res.end('Displaying user ' + req.params.uid);
 });
-
-
-// var data = {
-	// user: 'mac',
-	// time: 1581297496,
-	// songId: null,
-	// sImage: null,
-	// sName: 'Life Worth Living',
-	// sArtist: 'LAUREL',
-	// desc: 'amazing production on this one do you agree?',
-	// likes: 0,
-	// id: '1mCvM05OlYWQd77RDxCTLD',
-	// mood: 'Montage',
-	// dp: 'https://images.sk-static.com/images/media/profile_images/artists/5105188/huge_avatar'
-// };
-//
-// posts.insert(data, function (err, newDoc) {
-// 	//updates users posts
-// 	posts.count({ user: 'mac' }, function (err, count) {
-// 		users.update({ id: 'mac' }, { $set: { posts: count }}, {}, function (err, numReplaced) {
-// 			console.log(numReplaced);
-// 		});
-// 	});
-// });
-
 
 io.on('connection', function (socket) {
 
@@ -109,6 +82,9 @@ io.on('connection', function (socket) {
     getUserID(token,function(id,img) {
       users.findOne({ id: id }, function (err, doc) {
         if (doc == null) {
+					if (dp === null || dp === undefined || dp === '' ) {
+						dp = 'https://www.clipartkey.com/mpngs/m/29-297748_round-profile-image-placeholder.png';
+					}
           var newUser = {
             id: id,
             dp: img,

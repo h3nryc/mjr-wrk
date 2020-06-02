@@ -1,4 +1,4 @@
-var socket = io.connect('http://localhost:3000');
+var socket = io.connect('http://10.0.105.197:3000/');
 function FeedHandler() {
 
   this.token = localStorage.getItem('token');
@@ -19,6 +19,10 @@ function FeedHandler() {
     if (docs.length != 0) {
     $('#feed-posts').empty();
     }
+    if (docs.length == 0) {
+      $('#feed-posts').empty();
+      $('#feed-posts').append('<h1>There are no posts under this mood!</h1>');
+    }
     for (var i = 0; i < docs.length; i++) {
       likes.countLikes(docs[i]._id);
       likes.hasUsrLiked(token,docs[i]._id);
@@ -31,16 +35,20 @@ function FeedHandler() {
   };
 
   //Changes the posts in the feed based on which modd the user picks
+
+  //BROKEN!
   this.displayMood = function(mood) {
+    $(".mood-ol li").removeClass("highlight");
     var docs = JSON.parse(localStorage.getItem('docs'));
     var found = [];
     for (var i = 0; i < docs.length; i++) {
-      console.log(docs[i]);
       if (docs[i].mood == mood) {
         found.push(docs[i]);
       }
     }
+    console.log(found);
     this.display(found,false);
+    $('.'+mood.charAt(0).toLowerCase() + mood.slice(1)).parent().addClass('highlight');
   };
 
   //Sorts by most liked if user choses that option
