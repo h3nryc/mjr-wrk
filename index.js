@@ -299,6 +299,9 @@ io.on('connection', function (socket) {
 
 	socket.on('nameChange', function(name,token){
 		getUserID(token,function(id) {
+			console.log(1111111111);
+			console.log(id);
+			console.log(name);
 			users.update({ id: id }, { $set: { displayName: name }}, {}, function (err, numReplaced) {
 			});
 		})
@@ -338,12 +341,21 @@ io.on('connection', function (socket) {
 
 	socket.on('getNotif', function(token, callback){
 		getUserID(token,function(id) {
-			notif.find({ receiver: id }).sort({ time: -1 }).exec(function (err, docs) {
-				console.log(docs);
-				if (docs != null) {
-					callback(docs);
-				}
-			});
+			var notifs = [];
+					users.findOne({id: id}, function (err, doc) {
+						displayNameNotif = doc.displayName;
+						notif.find({ receiver: id }).sort({ time: -1 }).exec(function (err, docs) {
+							if (docs != null) {
+								notifs.push(docs);
+								notif.find({ receiver: displayNameNotif }).sort({ time: -1 }).exec(function (err, docs) {
+									if (docs != null) {
+										notifs.push(docs);
+										callback(notifs);
+									}
+								});
+							}
+						});
+					});
 		});
 	});
 
@@ -360,7 +372,6 @@ function getUserID(token,callback) {
 	.get('https://api.spotify.com/v1/me')
 	.then(({statusCode, body, headers}) => {
 		var data = JSON.parse(body)
-		console.log(data);
 		if (data.images.length == 0) {
 			callback(data.id,'https://www.clipartkey.com/mpngs/m/29-297748_round-profile-image-placeholder.png');
 		}else {
