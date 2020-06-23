@@ -32,7 +32,7 @@ app.get('/explore', function(req, res){
 //Logs user in through spotify api
 app.get('/login', function(req, res) {
 var scopes = 'playlist-read-private user-read-email user-top-read user-library-read user-read-recently-played user-read-private';
-var redirect_uri = 'http://10.0.105.197:3000/me/'
+var redirect_uri = 'http://localhost:3000/me/'
 res.redirect('https://accounts.spotify.com/authorize' +
   '?response_type=token' +
   '&client_id=' + '64b934ac08fd4dfeaa7e620e42038816' +
@@ -88,11 +88,9 @@ io.on('connection', function (socket) {
 //creates user in db on first login
   socket.on('cUser', function(token,callback) {
     getUserID(token,function(id,img) {
+			console.log('ID:  '+id);
       users.findOne({ id: id }, function (err, doc) {
         if (doc == null) {
-					if (img === null || img === undefined || img === '' ) {
-						img = 'https://www.clipartkey.com/mpngs/m/29-297748_round-profile-image-placeholder.png';
-					}
           var newUser = {
             id: id,
             dp: img,
@@ -108,16 +106,6 @@ io.on('connection', function (socket) {
 						follow: id
 					};
 					follow.insert(data, function (err, newDoc) {
-						// var notifData = {
-						// 	receiver: id,
-						// 	emitter: id,
-						// 	reason: 'follow',
-						// 	time: Date.now()
-						// };
-						// notif.insert(notifData, function (err, newDoc) {
-						// 	console.log(newDoc);
-						// });
-						//updates count
 						follow.count({ follow: id }, function (err, count) {
 							users.update({ id: id }, { $set: { followers: count }}, {}, function (err, numReplaced) {
 								console.log(numReplaced);
@@ -259,6 +247,7 @@ io.on('connection', function (socket) {
 								reason: 'like',
 								time: Date.now()
 							};
+							console.log(notifData);
 							notif.insert(notifData, function (err, newDoc) {
 								console.log(newDoc);
 							});
@@ -371,11 +360,16 @@ function getUserID(token,callback) {
 	.get('https://api.spotify.com/v1/me')
 	.then(({statusCode, body, headers}) => {
 		var data = JSON.parse(body)
-		callback(data.id,data.images[0].url);
+		console.log(data);
+		if (data.images.length == 0) {
+			callback(data.id,'https://www.clipartkey.com/mpngs/m/29-297748_round-profile-image-placeholder.png');
+		}else {
+					callback(data.id,data.images[0].url);
+		}
+
 		//return data.id;
 		//console.log(data.id);
 	}).catch((e) => {
-		console.log(1);
     console.log(e);
 		callback(false);
 });
