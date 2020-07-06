@@ -16,7 +16,7 @@ var follow = new Datastore({ filename: __dirname + '/db/follow.json', autoload: 
 var likes = new Datastore({ filename: __dirname + '/db/likes.json', autoload: true });
 var notif = new Datastore({ filename: __dirname + '/db/notif.json', autoload: true });
 
-
+//Sets up the routing for the progrm
 app.get('/', function(req, res){
 	res.sendFile(__dirname + '/static/views/index.html');
 });
@@ -149,6 +149,7 @@ io.on('connection', function (socket) {
     }
   });
 
+//Gets the users feed posts using their token
 	socket.on('feedPosts', function(token, mood) {
 		getUserID(token,function(id) {
 			if (mood == false) {
@@ -178,7 +179,7 @@ io.on('connection', function (socket) {
 		})
 	});
 
-//follows are user
+//follows a user
 	socket.on('followUsr', function(token,usr, callback){
 		getUserID(token,function(id) {
 			var data = {
@@ -209,6 +210,7 @@ io.on('connection', function (socket) {
 		})
 	});
 
+//Unfollows a user
 	socket.on('unfollowUsr', function(token,usr, callback){
 		getUserID(token,function(id) {
 			follow.remove({id: id, follow: usr}, function (err, newDoc) {
@@ -223,12 +225,15 @@ io.on('connection', function (socket) {
 		})
 	});
 
+//Used to keep a live view of the amount of likes
+
 	socket.on('countLikes', function(post, callback){
 		likes.count({ post: post }, function (err, count) {
 				callback(count,post)
 		});
 	});
 
+//Lets a user like a post
 	socket.on('likePost', function(token,post,owner, callback){
 		getUserID(token,function(id) {
 			var data = {
@@ -236,9 +241,11 @@ io.on('connection', function (socket) {
 				user: id
 			}
 			likes.insert(data, function (err, newDoc) {
+				//Updates the counts for the likes
 				likes.count({ post: post }, function (err, count) {
 					posts.update({ _id: post }, { $set: { likes: count }}, {}, function (err, numReplaced) {
 						users.findOne({ id: id }, function (err, doc) {
+							//Sends a notification
 							var notifData = {
 								post: post,
 								displayName: doc.displayName,
@@ -260,6 +267,7 @@ io.on('connection', function (socket) {
 		})
 	});
 
+//Unlikes a user's post
 	socket.on('unLikePost', function(token,post, callback){
 		getUserID(token,function(id) {
 			likes.remove({user: id, post: post}, function (err, newDoc) {
@@ -274,6 +282,7 @@ io.on('connection', function (socket) {
 		})
 	});
 
+//A check to see if a certain user has liked a particular post
 	socket.on('usrLiked', function(token,post, callback){
 		getUserID(token,function(id) {
 			likes.findOne({ user: id, post: post}, function (err, doc) {
@@ -286,6 +295,7 @@ io.on('connection', function (socket) {
 		})
 	});
 
+//A check to see if the user page the logged in user is viewing is the user page of the logged in user
 	socket.on('isMe', function(token,cUser, callback){
 		getUserID(token,function(id) {
 			if (id == cUser) {
@@ -297,9 +307,9 @@ io.on('connection', function (socket) {
 		})
 	});
 
+//Changes the display name for a user
 	socket.on('nameChange', function(name,token){
 		getUserID(token,function(id) {
-			console.log(1111111111);
 			console.log(id);
 			console.log(name);
 			users.update({ id: id }, { $set: { displayName: name }}, {}, function (err, numReplaced) {
@@ -307,6 +317,7 @@ io.on('connection', function (socket) {
 		})
 	});
 
+//Deletes a users post, only letting them delete posts with their token
 	socket.on('delPost', function(token, post) {
 		console.log(1);
 		getUserID(token,function(id) {
@@ -320,6 +331,7 @@ io.on('connection', function (socket) {
 		});
 	});
 
+//Uses regex to search users by display name
 	socket.on('usrSearch', function(user, callback){
 		var re = new RegExp(user);
 		users.find({ displayName: re}, function (err, docs) {
@@ -330,6 +342,7 @@ io.on('connection', function (socket) {
 
 	});
 
+//Finds one particular post
 	socket.on('findOnePost', function(post, callback){
 		posts.findOne({ _id: post}, function (err, doc) {
 			console.log(doc);
@@ -339,6 +352,8 @@ io.on('connection', function (socket) {
 		});
 	});
 
+//Retrives the notifcatin for the user
+//This code has to first turn the token to an id then the id into a display name to retrieve notifications
 	socket.on('getNotif', function(token, callback){
 		getUserID(token,function(id) {
 			var notifs = [];
