@@ -5,6 +5,11 @@
   margin-right: 0;
   display: inline-block;
 }
+.logout-l{
+  color: #8e44ad !important;
+  font-weight: bold;
+  cursor: pointer;
+}
 .feed-head{
   margin-bottom: 10px;
   margin-top: 0px;

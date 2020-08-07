@@ -59,12 +59,17 @@ function navProfile() {
   });
 }
 
+function logout() {
+    localStorage.setItem('token', null);
+}
+
 //refreshes token after the token expires
 window.setInterval(function(){
   if (Math.round((new Date()).getTime() / 1000) - localStorage.getItem('time') >= 3600) {
       window.location = "/login/";
   }
-  if (localStorage.getItem('token') == null) {
+  if (localStorage.getItem('token') == null || localStorage.getItem('token') == 'null' ) {
+    console.log(100);
     window.location = "/start/";
   }
 }, 1500);

@@ -35,9 +35,7 @@ function FeedHandler() {
     };
   };
 
-  //Changes the posts in the feed based on which modd the user picks
-
-  //BROKEN!
+//Changes the posts in the feed based on which modd the user picks
   this.displayMood = function(mood) {
     $(".mood-ol li").removeClass("highlight");
     var docs = JSON.parse(localStorage.getItem('docs'));
